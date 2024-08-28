@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from '../../data';
 import Auth from './Auth/Auth';
 const DemoHeader = () => {
     const [isActive,setIsActive] = useState(false);
+    const [modal,setModal] = useState(false); 
    useEffect(() => {
     const scrollme = () => {
         window.scrollY > 50 ? setIsActive(true) : setIsActive(false);
@@ -31,11 +32,11 @@ const DemoHeader = () => {
                 ))}
                </div>
                <div className='relative'>
-                <button className='hidden text-sm sm:flex items-center gap-5'>sign up</button>
+                <button onClick={() => setModal(true)} className='hidden text-sm sm:flex items-center gap-5' >sign up</button>
                
                </div>
-               <Auth/>
-               <button className={`bg-black text-white px-3 py-2 font-medium rounded-full
+               <Auth modal={modal} setModal={setModal}/>
+               <button onClick={() => setModal(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
                 ${isActive ? 'bg-blue-600' : 'bg-black' }`}>Get started</button>
             </div>
     
@@ -45,4 +46,4 @@ const DemoHeader = () => {
   )
 }
 
-export default DemoHeader
+export default DemoHeader;

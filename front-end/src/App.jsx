@@ -4,15 +4,22 @@ import Home from "./components/home/home";
 import Demo from "./components/demo/demo";
 import HomeHeader from "./components/home/homeHeader";
 import DemoHeader from "./components/demo/demoHeader";
+import { Navigate } from "react-router-dom";
+import { useBlog } from "./context/context";
+import Write from "./components/home/write/Write";
+import Profile from "./components/home/profile/profile";
 function App() {
  
-const auth = false;
+  const { currentUser } = useBlog();
   return (
     <>
-    {auth ? <HomeHeader/> : <DemoHeader/>}
+    {currentUser? <HomeHeader/> : <DemoHeader/>}
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/demo" element={<Demo/>} />
+         {currentUser && <Route path="/" element={<Home/>} />}
+         {!currentUser && <Route path="/demo" element={<Demo/>} />}
+         <Route path="*" element={<Navigate to={!currentUser ? "/demo" : "/"} />}></Route>
+         <Route path="/profile/:userId" element={<Profile/>}></Route>
+         <Route path="/write" element={<Write/>}></Route>
         </Routes>
     </>
   )

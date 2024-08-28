@@ -1,9 +1,9 @@
 
 import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider,getAuth } from "firebase/auth";
 
-import {getAuth,GoogleAuthProvider} from 'firebase/auth';
 import {getStorage} from 'firebase/storage';
-import {getFireStore} from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 const firebaseConfig = {
   apiKey: "AIzaSyCGYpzYX_hn2mmfYRCkdJX2iuA41QS0gA0",
   authDomain: "fir-blog-9093d.firebaseapp.com",
@@ -14,9 +14,10 @@ const firebaseConfig = {
   measurementId: "G-67WRRBQQ99"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const provider = new GoogleAuthProvider();
 export const storage = getStorage();
-export const db = getFireStore(app);
+export const db = getFirestore(app);
+
