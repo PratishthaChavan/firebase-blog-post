@@ -17,7 +17,7 @@ const Auth = ({ modal, setModal }) => {
             const createUser = await signInWithPopup(auth,provider );
             const newUser = createUser.user;
             const ref = doc(db,"users",newUser.uid);
-            const userDoc = await getDoc(ref)
+            const userDoc = await getDoc(ref);
             if (!userDoc.exists()){
               await setDoc(ref,{
                 userId: newUser.uid,

@@ -3,12 +3,15 @@ import useHooks from '../../hooks/useHooks';
 import { readtime } from '../../../utils/helper';
 import moment from 'moment';
 import SavePost from './action/SavePost';
+import { useBlog } from '../../../context/context';
+import Action from './action/Action';
+
 const PostCards = ({ post }) => {
   const {title, userId ,desc,postImg,created} = post; 
   const { data, loading } = useHooks("users"); 
+  const {currentUser} = useBlog();
 
 
-  // Find the user data by userId
   const getUserData = data?.find((user) => user?.id === userId);
 
   return (
@@ -26,7 +29,8 @@ const PostCards = ({ post }) => {
       <div className='flex items-center justify-between w-full md:w-[70%] mt-[2rem] md:mt-0'>
         <p className='text-xs text-gray-400'>{readtime({ __html: desc })} min read.{moment(created).format("MMM DD")} </p>
        <div className='flex items-center gap-3'>
-        <SavePost post={post}/>
+        <SavePost post={post} getUserData={getUserData}/>
+        {currentUser?.uid === userId && <Action post={post}/>}
        </div>
       </div>
  </>

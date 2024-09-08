@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfileHome = () => {
+const ProfileHome = ({getUserData}) => {
   return (
     <div>ProfileHome</div>
   )

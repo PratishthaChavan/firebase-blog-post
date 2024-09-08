@@ -1,12 +1,14 @@
 import React from 'react'
 import { CgProfile } from "react-icons/cg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaPenToSquare } from "react-icons/fa6";
 import { MdAutoStories } from "react-icons/md";
 import { MdOutlineLocalLibrary } from "react-icons/md";
 import { MdOutlineQueryStats } from "react-icons/md";
 import { useBlog } from '../../context/context';
 import { SecretEmail } from '../../utils/helper';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 const UserModel = () => {
     const { currentUser } = useBlog();
     const userModal = [
@@ -36,6 +38,19 @@ const UserModel = () => {
         
 
     ]
+    const navigate = useNavigate(null);
+
+    const logOut = async() => {
+
+      try {
+        await signOut(auth);
+        navigate("/demo");
+        console.log("user has been logged out");
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
   return (
    <section className='absolute w-[13rem] p-4 bg-white right-0 top-[100%] shadows rounded-md z-50 text-gray-500'>
      <Link to="/write" className='flex md:hidden items-center gap-2  text-gray-500'>
@@ -50,8 +65,9 @@ const UserModel = () => {
           </Link>
         ))}
           </div>
-          <button className='flex flex-col pt-5 cursor-pointer hover:text-black'>
+          <button onClick={logOut} className='flex flex-col pt-5 cursor-pointer hover:text-black '>
             Sign Out
+            
             <span>{SecretEmail(currentUser?.email)}</span>
           </button>
    </section>

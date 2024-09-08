@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiSaveDown2 } from "react-icons/ci";
 import { useBlog } from '../../../../context/context';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../../firebase/firebase';
+import UseSingleFetch from '../../../hooks/useSingleFetch';
 const SavePost = ({post}) => {
-    const [isSaved,setIsSaved] = useState();
+    const [isSaved,setIsSaved] = useState(false);
     const {currentUser} = useBlog();
+    const {data,loading} = UseSingleFetch("users" , currentUser?.uid , "savePost" );
+    useEffect(() => {
+        setIsSaved( data && data.find((item) => item.id === post.id));
+    },[data,[post?.id]]);
     const handleSave = async() => {
         try {
             if(currentUser){
