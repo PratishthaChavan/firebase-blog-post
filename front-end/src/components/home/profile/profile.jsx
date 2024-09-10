@@ -9,6 +9,7 @@ import { discoverAction } from '../../../data';
 import EditProfile from './Activities/EditProfile'
 import { useBlog } from '../../../context/context'
 import { useParams } from 'react-router-dom';
+import UseSingleFetch from '../../hooks/useSingleFetch'
 
 const Profile = () => {
     const [modal,setModal] = useState(false);
@@ -32,6 +33,8 @@ const Profile = () => {
     ]
     const [currentActivity,setCurrentActivity] = useState(activities[0]);
     const getUserData = allUser.find((user) => user.id === userId || user.id === currentUser?.uid);
+    const {data:follow} = UseSingleFetch("users",userId,"follow");
+    const {data:follower} = UseSingleFetch("users", userId,"follower");
 
     console.log(getUserData);
   return (
@@ -40,10 +43,10 @@ const Profile = () => {
         <div className='flex items-end gap-4'>
           <h2 className='text-3xl sm:text-5xl font-bold capitalize'> {getUserData?.username} </h2>
           <p className=' text-gray-400 text-xs sm:text-sm'>
-            follower(2)
+            follower({follower.length})
           </p>
           <p className=' text-gray-400 text-xs sm:text-sm'>
-            following(2)
+            following({follow.length})
           </p>
         </div>
         <div className=' flex items-center gap-5 mt-[1rem]  border-b border-gray-500 mb-[3rem]'>
@@ -74,7 +77,7 @@ const Profile = () => {
         </button>
      </div>
      <div className='sticky top-7 flex flex-col justify-between '>
-        <img className='w-[3.5rem] h-[3.5rem] object-cover rounded-full' src={getUserData?.image || "profile.jpg"} alt="" />
+        <img className='w-[3.5rem] h-[3.5rem] object-cover border rounded-full' src={getUserData?.image || "profile.jpg"} alt="" />
         <h1  className='py-2 font-bold capitalize'>{getUserData?.username}</h1>
         <p className='text-blue-400 first-letter:uppercase text:sm'>I am a content creater </p>
         <button 

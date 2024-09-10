@@ -35,7 +35,8 @@ const Signin = ({setModel}) => {
       email: form.email,
       password: form.password,
       Bio:"",
-      image: ""
+      image: "",
+      createdAt:Date.now()
 
     });
     navigate('/');

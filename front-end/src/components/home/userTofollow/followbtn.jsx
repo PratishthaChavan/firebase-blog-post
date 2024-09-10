@@ -3,11 +3,12 @@ import { useBlog } from '../../../context/context';
 import { db } from '../../../firebase/firebase';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import UseSingleFetch from '../../hooks/useSingleFetch';
-
+import { useLocation } from 'react-router-dom';
 const Followbtn = ({ userId }) => {  // Ensure userId is passed as a prop
     const [isFollow, setIsFollow] = useState(false);
     const { currentUser } = useBlog();
     const { data, loading } = UseSingleFetch("users", currentUser?.uid, "follow");
+    const {pathname} = useLocation();
 
     useEffect(() => {
         if (data && currentUser?.uid) {
@@ -41,9 +42,12 @@ const Followbtn = ({ userId }) => {  // Ensure userId is passed as a prop
     return (
         <button
             onClick={handleFollow}
-            className='px-2 rounded-full border border-black py-[0.2rem]'
+            className={`
+                ${pathname === "/" ? " border  border-black " : "text-gray-500"} 
+                ${isFollow ? "px-2 rounded-full border border-black py-[0.2rem]" : " "}  `}
+            
         >
-            {isFollow ? "Unfollow" : "Follow"}
+          {isFollow ? "Unfollowed" : "Followed"}
         </button>
     );
 };

@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import { useBlog } from "./context/context";
 import Write from "./components/home/write/Write";
 import Profile from "./components/home/profile/profile";
+import SinglePost from "./components/common/posts/singlePost";
 function App() {
  
   const { currentUser } = useBlog();
@@ -20,6 +21,7 @@ function App() {
          <Route path="*" element={<Navigate to={!currentUser ? "/demo" : "/"} />}></Route>
          <Route path="/profile/:userId" element={<Profile/>}></Route>
          <Route path="/write" element={<Write/>}></Route>
+         <Route path="/post/:postId" element={<SinglePost/>}></Route>
         </Routes>
     </>
   )

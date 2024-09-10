@@ -5,11 +5,15 @@ import moment from 'moment';
 import SavePost from './action/SavePost';
 import { useBlog } from '../../../context/context';
 import Action from './action/Action';
+import { useNavigate } from 'react-router-dom';
+
 
 const PostCards = ({ post }) => {
-  const {title, userId ,desc,postImg,created} = post; 
+  const {title, userId ,desc,postImg,id:postId,created} = post; 
   const { data, loading } = useHooks("users"); 
   const {currentUser} = useBlog();
+  const navigate = useNavigate();
+
 
 
   const getUserData = data?.find((user) => user?.id === userId);
@@ -17,7 +21,11 @@ const PostCards = ({ post }) => {
   return (
  
  <>
-      <div className='flex flex-col sm:flex-row gap-4 cursor-pointer'>
+      <div
+      onClick={() => {
+        navigate(`/post/${postId}`)
+      }}
+       className='flex flex-col sm:flex-row gap-4 cursor-pointer'>
       <div className='flex-[2.5]'>
         <p className='pb-2 font-semibold capitalize'>{getUserData?.username}</p>
         <h2 className='text-xl font-bold line-clamp-1 leading-6 capitalize'>{title}</h2>
