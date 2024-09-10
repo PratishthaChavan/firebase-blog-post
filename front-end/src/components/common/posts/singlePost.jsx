@@ -108,7 +108,7 @@ const SinglePost = () => {
 
 
  )}
-  <Recommended post={post}></Recommended>
+  <Recommended post={post} postId={postId}></Recommended>
  </>
   )
 }

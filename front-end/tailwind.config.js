@@ -16,7 +16,7 @@ export default {
         text:"sohnem,Helvetic Neue,Helvetic,Arial.san-serif",
       },
       gridTemplateColumns:{
-        card: "repeat(auto-fit,minmax(280px,1fr)",
+        card: "repeat(auto-fit,minmax(280px,1fr))",
       }
     },
   },
