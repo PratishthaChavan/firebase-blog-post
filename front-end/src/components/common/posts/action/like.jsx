@@ -1,14 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { PiHandsClappingFill } from "react-icons/pi";
-const Like = () => {
+import { useBlog } from '../../../../context/context';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../../firebase/firebase';
+import UseSingleFetch from '../../../hooks/useSingleFetch';
+import { formatnumber } from '../../../../utils/helper';
+const Like = ({ postId }) => {
+  const { currentUser } = useBlog();
+  const [isLiked, setIsLiked] = useState(false); 
+  const { data, loading } = UseSingleFetch("posts", postId, "likes");
+
+
+  useEffect(() => {
+    if (loading) return; 
+    setIsLiked(data.some((item) => item.id === currentUser?.uid));
+  }, [data, loading, currentUser?.uid]);
+
+  const handleLike = async () => {
+    if (!currentUser) return;
+
+    try {
+      const likeRef = doc(db, "posts", postId, "likes", currentUser.uid);
+
+      if (isLiked) {
+      
+        await deleteDoc(likeRef);
+      } else {
+      
+        await setDoc(likeRef, { userId: currentUser.uid });
+      }
+      
+     
+      setIsLiked(!isLiked);
+
+    } catch (error) {
+      console.error("Error updating like:", error);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div>
-        <button className='flex  items-center gap-1 text-1xl'><PiHandsClappingFill />
-        <span>1</span>
-        </button>
-       
+      <button 
+        onClick={handleLike}
+        className={`text-xl flex items-center gap-1 ${isLiked ? "text-black" : "text-gray-500"}`}
+      >
+        <PiHandsClappingFill />
+        
+        <span>{formatnumber(data?.length)}</span>
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default Like
+export default Like;

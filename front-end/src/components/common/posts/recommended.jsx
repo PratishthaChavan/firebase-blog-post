@@ -12,6 +12,9 @@ const Recommended = ({post:SinglePost}) => {
   useEffect(() => {
     let recommendedPost = [];
     data && data.forEach((post)=> {
+      if (post.id === SinglePost.id){
+        return;
+      }
       const postTag = post.tags;
       console.log(postTag);
       const commonTags = postTag.filter((tag) => SinglePost?.tags?.includes(tag));
@@ -23,7 +26,10 @@ const Recommended = ({post:SinglePost}) => {
         
       }
     })
-setCommonTags(recommendedPost);
+    recommendedPost.sort(() => Math.round() * -0.5 );
+    const minRecommendation = 4;
+    const slice = recommendedPost.slice(0,minRecommendation);
+setCommonTags(slice);
   },[data,SinglePost]);
 
   console.log(commonTags);
@@ -60,8 +66,8 @@ const Post = ({post}) => {
     navigate(`/post/${postId}`);
   }}
   className='w-full cursor-pointer'>
-    <img className='w-full h-[200px] object-cover' src={postImg} alt="post-img" />
-    <div className='flex items-center gap-1 py-1'>
+    <img className='w-full h-[300px] object-cover' src={postImg} alt="post-img" />
+    <div className='flex items-center gap-1 py-3'>
     {userImg ? (
           <img className='w-[2rem] h-[2rem] object-cover rounded-full' src={userImg} alt={username} />
         ) : (

@@ -5,6 +5,8 @@ import { db } from '../../../firebase/firebase';
 import { getDoc, setDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import Posts from './Posts';
+import { FaRegComments } from "react-icons/fa";
+
 import Loading from '../../Loading/Loading';
 import Followbtn from '../../home/userTofollow/followbtn';
 import { useBlog } from '../../../context/context';
@@ -79,8 +81,9 @@ const SinglePost = () => {
      <div className='flex items-center border-b border-t justify-between border-gray-200 py-[0.5rem]'>
       <div className='gap-5 flex items-center'>
        
-       <Like></Like>
-        <Comments></Comments>
+       <Like postId={postId}></Like>
+       <button  className='flex  items-center gap-1 text-lg'><FaRegComments />
+       <span>1</span></button>
       </div>
       <div className='flex items-center gap-5 pt-2'>
             <SavePost post={post}/>
@@ -109,6 +112,7 @@ const SinglePost = () => {
 
  )}
   <Recommended post={post} postId={postId}></Recommended>
+ <Comments post={post} postId={postId}></Comments>
  </>
   )
 }
