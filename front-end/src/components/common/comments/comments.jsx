@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaRegComments } from "react-icons/fa";
 import Model from '../../../utils/Model';
 import { useState } from 'react';
@@ -11,8 +11,8 @@ import UseSingleFetch from '../../hooks/useSingleFetch';
 import Loading from '../../Loading/Loading';
 import Comment from './comment';
 const Comments = ({postId}) => {
-  const [showModal,setShowModal] = useState(true);
-  const {currentUser,allUser} = useBlog();
+  
+  const {currentUser,allUser,showComment,setShowComment,commentLength,setCommentLength} = useBlog();
   const getUserData = allUser.find((user) => user.id === currentUser?.uid);
   const [comments,setComments] = useState("");
   const {data,loading} = UseSingleFetch("posts" , postId ,"comments");
@@ -37,15 +37,21 @@ const Comments = ({postId}) => {
     }
   }
 
+  useEffect(() => {
+   if(data) {
+    setCommentLength(data.length);
+   }
+  } ,[data]); 
+
   return (
   <>
-    <Model modal={showModal} setModal={setShowModal}>
+    <Model modal={showComment} setModal={setShowComment}>
 <section className={`fixed top-0 right-0 bottom-0 z-50 bg-white w-[22rem] shadows p-5 overflow-y-auto transition-all duration-500
-  ${showModal ? "translate-x-0" : "translate-x-[23rem]"}`}>
+  ${showComment ? "translate-x-0" : "translate-x-[23rem]"}`}>
     <div className='flex items-center justify-between'>
-      <h2 className='text-xl font-bold '>Response(1)</h2>
+      <h2 className='text-xl font-bold '>Response({data.length})</h2>
       <button
-      onClick={() => showModal(false)}
+      onClick={() => setShowComment(false)}
        className='text-xl'>
       <LiaTimesSolid />
       </button>
@@ -71,9 +77,13 @@ const Comments = ({postId}) => {
          </div>
       </div>
     )}
-    {data && data?.length === 0 ? (<p>This post has no comments </p>) : (data.map((items,i) => (
+    {data && data?.length === 0 ? (<p>This post has no comments </p>) : ( 
+      <div className='border-t py-4 mt-8 flex flex-col gap-8'>
+        {data && data.map((items,i) => (
       loading ? <Loading/> : <Comment items={items}key={i} postId={postId}/>)
-    )) }
+    )}
+      </div>
+    ) }
   </section>
      
     </Model>

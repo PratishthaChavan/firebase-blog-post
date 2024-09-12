@@ -6,7 +6,7 @@ import { getDoc, setDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import Posts from './Posts';
 import { FaRegComments } from "react-icons/fa";
-
+import OpenComment from './action/openComment';
 import Loading from '../../Loading/Loading';
 import Followbtn from '../../home/userTofollow/followbtn';
 import { useBlog } from '../../../context/context';
@@ -82,8 +82,8 @@ const SinglePost = () => {
       <div className='gap-5 flex items-center'>
        
        <Like postId={postId}></Like>
-       <button  className='flex  items-center gap-1 text-lg'><FaRegComments />
-       <span>1</span></button>
+       <OpenComment></OpenComment>
+     
       </div>
       <div className='flex items-center gap-5 pt-2'>
             <SavePost post={post}/>

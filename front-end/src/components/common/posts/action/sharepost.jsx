@@ -19,7 +19,18 @@ import {
     
   } from "react-share";
 const Sharepost = () => {
-    const [showDrop,setShowDrop] = useState(true);
+    const [showDrop,setShowDrop] = useState(false);
+
+    const path = window.location.href;
+    const copyLink = async() => {
+     try {
+      await navigator.clipboard.writeText(path);
+      alert("The link is copied successfully");
+      setShowDrop(false)
+     } catch (error) {
+      console.log("Internal server error");
+     }
+    }
   return (
     <>
     <div className='relative'>
@@ -28,7 +39,7 @@ const Sharepost = () => {
     </button>
     
         <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
-           <Button click={""} title='Copy link' icon={<MdContentCopy />}></Button>
+           <Button click={copyLink} title='Copy link' icon={<MdContentCopy />}></Button>
            <Button click={""} title='share on Email' icon={<MdOutlineMarkEmailRead />}></Button>
            <Button click={""} title='share on Pinterest' icon={<GrPinterest />}></Button>
            <Button click={""} title='share on Whatapp' icon={<FaWhatsapp />}></Button>
@@ -43,7 +54,9 @@ const Sharepost = () => {
 export default Sharepost
 const Button = ({click,icon,title}) => {
     return(
-        <button className='p-2 hover:bg-gray-500 hover:text-black/80 w-full 
+        <button
+        onClick={(click)}
+         className='p-2 hover:bg-gray-500 hover:text-black/80 w-full 
         text-sm text-left flex items-center cursor-pointer'>
    <span className='text-[1.2rem]'>{icon}</span> {title}
         </button>

@@ -5,16 +5,20 @@ import { useState } from 'react';
 import { auth } from '../firebase/firebase';
 import Loading from '../components/Loading/Loading';
 
+
 import { onSnapshot ,collection , query, doc} from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const BlogContext = createContext();
 const Context = ({children}) => {
+  
     const [currentUser,setCurrentUser] = useState(true);
     const [loading,setLoading] = useState(true);
     const [allUser,setAllUser] = useState([]);
     const [userLoading,setUserLoading] = useState(true);
     const [publish,setPublish] = useState(false);
+    const [showComment,setShowComment] = useState(false);
+    const [commentLength,setCommentLength] = useState(0);
     useEffect(() => {
    
        const unsubscribe = onAuthStateChanged(auth,(users)=> {
@@ -55,7 +59,9 @@ const Context = ({children}) => {
    
     <div > 
         <BlogContext.Provider value={{
-          currentUser,setCurrentUser,allUser,userLoading,publish,setPublish}}>{children}</BlogContext.Provider>
+          currentUser,setCurrentUser,allUser,userLoading,publish,setPublish,showComment,setShowComment
+          ,commentLength,setCommentLength
+             }}>{children}</BlogContext.Provider>
     </div>
   )
 }
