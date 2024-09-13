@@ -9,6 +9,7 @@ import { useBlog } from "./context/context";
 import Write from "./components/home/write/Write";
 import Profile from "./components/home/profile/profile";
 import SinglePost from "./components/common/posts/singlePost";
+import EditPost from "./components/common/posts/action/EditPost";
 function App() {
  
   const { currentUser } = useBlog();
@@ -22,6 +23,7 @@ function App() {
          <Route path="/profile/:userId" element={<Profile/>}></Route>
          <Route path="/write" element={<Write/>}></Route>
          <Route path="/post/:postId" element={<SinglePost/>}></Route>
+         <Route path="/editpost/:postId" element={<EditPost/>}></Route>
         </Routes>
     </>
   )

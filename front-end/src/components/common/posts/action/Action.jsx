@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { BsThreeDots } from "react-icons/bs";
 import Dropdown from '../../../../utils/dropdown';
+import { useNavigate } from 'react-router-dom';
+import { useBlog } from '../../../../context/context';
 
 
 const Button = ({ title, onClick }) => {
+
+
+
+ 
   return (
     <button
       className={`px-2 hover:bg-slate-400 w-full text-sm text-left py-1 hover:text-black ${title === "Delete Story" ? "text-red-500":""}`}
@@ -14,10 +20,16 @@ const Button = ({ title, onClick }) => {
   );
 };
 
-const Action = () => {
+const Action = ({postId,title,desc}) => {
+  const {setUpdatePostData} = useBlog();
   const [showDrop,setShowDrop] = useState(false);
+  const navigate = useNavigate(null);
   const handleDropDown = () => {
     setShowDrop(true);
+  }
+  const handleEdit = () => {
+    navigate(`/editpost/${postId}`);
+    setUpdatePostData({title,description:desc});
   }
 
 
@@ -32,7 +44,7 @@ const Action = () => {
         <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-[7rem]">
           <Button 
             title="Edit Story" 
-            onClick={() => console.log("Edit Story clicked")}
+            onClick={handleEdit}
           />
           <Button 
             title="Delete Story" 

@@ -88,7 +88,7 @@ const SinglePost = () => {
       <div className='flex items-center gap-5 pt-2'>
             <SavePost post={post}/>
             <Sharepost></Sharepost>
-            {currentUser?.uid === post?.userId && (<Action/>)}
+            {currentUser?.uid === post?.userId && (<Action postId={postId} title={title} desc={desc} />)}
 
       </div>
      </div>

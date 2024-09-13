@@ -6,14 +6,15 @@ import { MdContentCopy, MdOutlineMarkEmailRead   } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa6";
 import { SiReddit } from "react-icons/si";
 import { GrPinterest } from "react-icons/gr";
-
+import { FaTwitter } from 'react-icons/fa6';
+import { FaLinkedin } from 'react-icons/fa6';
 import {
     EmailShareButton,
     LinkedinShareButton,
     OKShareButton,
     RedditShareButton,
     PinterestShareButton,
-    
+    TwitterShareButton,
     TelegramShareButton,
     WhatsappShareButton,
     
@@ -40,10 +41,23 @@ const Sharepost = () => {
     
         <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
            <Button click={copyLink} title='Copy link' icon={<MdContentCopy />}></Button>
-           <Button click={""} title='share on Email' icon={<MdOutlineMarkEmailRead />}></Button>
-           <Button click={""} title='share on Pinterest' icon={<GrPinterest />}></Button>
-           <Button click={""} title='share on Whatapp' icon={<FaWhatsapp />}></Button>
-           <Button click={""} title='share on Reddit' icon={<SiReddit />}></Button>
+          <EmailShareButton>
+             <Button  title='share on Email' icon={<MdOutlineMarkEmailRead />}></Button>
+             </EmailShareButton>
+             <TwitterShareButton url={path}>
+                    <Button title='Share on Twitter' icon={<FaTwitter />} />
+                </TwitterShareButton>
+                <LinkedinShareButton url={path}>
+                    <Button title='Share on LinkedIn' icon={<FaLinkedin />} />
+                </LinkedinShareButton>
+             
+           <Button title='share on Pinterest' icon={<GrPinterest />}></Button>
+           <WhatsappShareButton url={path}>
+                    <Button title='Share on WhatsApp' icon={<FaWhatsapp />} />
+          </WhatsappShareButton>
+          <RedditShareButton url={path}>
+                    <Button title='Share on Reddit' icon={<SiReddit />} />
+          </RedditShareButton>
         </Dropdown>
     
     </div>

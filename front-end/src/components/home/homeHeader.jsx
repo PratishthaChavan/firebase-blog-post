@@ -14,13 +14,14 @@ const HomeHeader = () => {
   const [searchModel, setSearchModel] = useState(false);
   const {allUser,userLoading,currentUser,setPublish} = useBlog();
   const {pathname} = useLocation();
-  console.log(pathname);
+  const editpath = pathname.split("/")[1];
+  console.log(editpath);
 
   
   const getUserData = allUser.find((users) => users.id === currentUser?.uid)
 
   const toggleSearch = () => {
-    setSearchModel(prev => !prev); // Toggle searchModel state
+    setSearchModel(prev => !prev);
   };
 
   return (
@@ -33,28 +34,30 @@ const HomeHeader = () => {
               <FaBlogger />
             </span>
           </Link>
-          {/* Desktop Search Bar */}
+       
           <div className='hidden sm:flex'>
-            <Search modal={true} setModal={() => {}} /> {/* Always visible on desktop */}
+            <Search modal={true} setModal={() => {}} /> 
           </div>
         </div>
         
         <div className='flex items-center gap-2 sm:gap-7'>
-          {/* Mobile Search Icon */}
+          
           <span 
             className='flex sm:hidden text-3xl text-gray-300 cursor-pointer'
-            onClick={toggleSearch} // Toggle search bar on icon click
+            onClick={toggleSearch} 
           >
             <CiSearch />
           </span>
       {pathname === "/write"? <button
       onClick={() => setPublish(true )}
       className='btn !bg-green-500 !py-1 text-yellow-900 rounded-full !px-5'
-      >Publish</button> :     
-      <Link to="/write" className='hidden md:flex items-center gap-1 text-gray-500'>
-            <span className='text-2xl'><FaPenToSquare /></span>
-            <span className='text-sm mt-1'>Write</span>
-          </Link> }
+      >Publish</button> : editpath === "editpost" ? (<button className='px-2 hover:bg-violet-400 
+          bg-violet-300 rounded-full'>Save and Update</button> ) : 
+      (<Link to="/write" className='hidden md:flex items-center gap-1 text-gray-500'>
+        <span className='text-2xl'><FaPenToSquare /></span>
+        <span className='text-sm mt-1'>Write</span>
+      </Link> )  }
+      
           <span className='text-3xl text-gray-500 cursor-pointer'>
             <MdOutlineNotificationsActive />
           </span>
@@ -75,7 +78,7 @@ const HomeHeader = () => {
           </div>
         </div>
       </div>
-      {/* Mobile Search Overlay */}
+     
       <div className={`fixed top-[60px] left-0 w-full bg-white shadow-lg transition-transform ${searchModel ? "translate-y-0" : "-translate-y-full"} transition-all duration-300`}>
         <Search modal={searchModel} setModal={setSearchModel} />
       </div>
