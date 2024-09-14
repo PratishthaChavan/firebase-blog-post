@@ -11,7 +11,8 @@ import { db } from '../firebase/firebase';
 
 const BlogContext = createContext();
 const Context = ({children}) => {
-  
+    const [title,setTitle] = useState('');
+    const [description,setDescription] = useState('');
     const [currentUser,setCurrentUser] = useState(true);
     const [loading,setLoading] = useState(true);
     const [allUser,setAllUser] = useState([]);
@@ -61,7 +62,7 @@ const Context = ({children}) => {
     <div > 
         <BlogContext.Provider value={{
           currentUser,setCurrentUser,allUser,userLoading,publish,setPublish,showComment,setShowComment
-          ,commentLength,setCommentLength,updatePostData,setUpdatePostData  
+          ,commentLength,setCommentLength,updatePostData,setUpdatePostData,title,setTitle,description,setDescription
              }}>{children}</BlogContext.Provider>
     </div>
   )

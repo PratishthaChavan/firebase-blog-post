@@ -9,13 +9,39 @@ import { FaBlogger } from "react-icons/fa";
 import { useBlog } from '../../context/context';
 import Loading from '../Loading/Loading';
 import { useLocation } from 'react-router-dom';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { db } from '../../firebase/firebase';
 const HomeHeader = () => {
   const [modal, setModal] = useState(false);
   const [searchModel, setSearchModel] = useState(false);
-  const {allUser,userLoading,currentUser,setPublish} = useBlog();
+  const {allUser,userLoading,currentUser,setPublish,updatePostData,title,description } = useBlog();
   const {pathname} = useLocation();
+  const [loading,setLoading] = useState(false);
+  const navigate= useNavigate();
   const editpath = pathname.split("/")[1];
-  console.log(editpath);
+  const postId = pathname.split("/")[2];
+ 
+  
+
+
+  const handleEdit = async() => {
+try {
+  const ref = doc(db,"posts",postId);
+  await updateDoc(ref,{
+    title,
+    desc: description
+  }
+ 
+   
+)
+navigate(`/post/${postId}`);
+alert("The post has been updated");
+} catch (error) {
+  console.log("internal server error");
+}
+
+}
 
   
   const getUserData = allUser.find((users) => users.id === currentUser?.uid)
@@ -52,7 +78,12 @@ const HomeHeader = () => {
       onClick={() => setPublish(true )}
       className='btn !bg-green-500 !py-1 text-yellow-900 rounded-full !px-5'
       >Publish</button> : editpath === "editpost" ? (<button className='px-2 hover:bg-violet-400 
-          bg-violet-300 rounded-full'>Save and Update</button> ) : 
+        
+          bg-violet-300 rounded-full'
+          onClick={
+            handleEdit
+          }
+          >{loading ? "Updating..." : "Save and Update"}</button> ) : 
       (<Link to="/write" className='hidden md:flex items-center gap-1 text-gray-500'>
         <span className='text-2xl'><FaPenToSquare /></span>
         <span className='text-sm mt-1'>Write</span>

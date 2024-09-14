@@ -4,7 +4,7 @@ import { db } from '../../../firebase/firebase';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import UseSingleFetch from '../../hooks/useSingleFetch';
 import { useLocation } from 'react-router-dom';
-const Followbtn = ({ userId }) => {  // Ensure userId is passed as a prop
+const Followbtn = ({ userId }) => {  
     const [isFollow, setIsFollow] = useState(false);
     const { currentUser } = useBlog();
     const { data, loading } = UseSingleFetch("users", currentUser?.uid, "follow");
@@ -27,7 +27,7 @@ const Followbtn = ({ userId }) => {  // Ensure userId is passed as a prop
                     await deleteDoc(followerRef);
                     alert("The user is unfollowed");
                 } else {
-                    await setDoc(followRef, { userId });
+                    await setDoc(followRef, { userId : userId});
                     await setDoc(followerRef, { userId });
                     alert("The user is followed");
                 }

@@ -16,7 +16,7 @@ const Comments = ({postId}) => {
   const getUserData = allUser.find((user) => user.id === currentUser?.uid);
   const [comments,setComments] = useState("");
   const {data,loading} = UseSingleFetch("posts" , postId ,"comments");
-  console.log("this is the post data",data);
+ 
 
   const writeComments = async() => {
     try {

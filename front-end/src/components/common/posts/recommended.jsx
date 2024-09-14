@@ -16,9 +16,10 @@ const Recommended = ({post:SinglePost}) => {
         return;
       }
       const postTag = post.tags;
-      console.log(postTag);
+     
       const commonTags = postTag.filter((tag) => SinglePost?.tags?.includes(tag));
-      console.log(commonTags);
+  
+      
       if (commonTags.length > 0) {
         recommendedPost.push({
           ...post,commonTags
@@ -32,7 +33,6 @@ const Recommended = ({post:SinglePost}) => {
 setCommonTags(slice);
   },[data,SinglePost]);
 
-  console.log(commonTags);
   return (
     <>
     <section className='bg-gray-100'>
@@ -56,17 +56,17 @@ const Post = ({post}) => {
   const user = data?.find(user => user?.id === userId) || {};
   const { username = 'Unknown', image: userImg = '' } = user;
   const navigate = useNavigate(null);
-  console.log(data);
+ 
 
 
   return(
   <div 
   onClick={() => {
-    console.log(`Navigating to /post/${postId}`); // Debug log
+    
     navigate(`/post/${postId}`);
   }}
   className='w-full cursor-pointer'>
-    <img className='w-full h-[300px] object-cover' src={postImg} alt="post-img" />
+    <img className='w-full h-[200px] object-cover' src={postImg} alt="post-img" />
     <div className='flex items-center gap-1 py-3'>
     {userImg ? (
           <img className='w-[2rem] h-[2rem] object-cover rounded-full' src={userImg} alt={username} />

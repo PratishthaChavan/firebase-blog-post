@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import ReactQuill from 'react-quill';
 import { useState } from 'react';
 import { useBlog } from '../../../../context/context';
+
 const EditPost = () => {
-    const {updatePostData} = useBlog();
+    const {updatePostData,title,setTitle,description,setDescription } = useBlog();
+   
     useEffect(() => {
         if(updatePostData) {
             setTitle(updatePostData.title);
@@ -12,8 +14,7 @@ const EditPost = () => {
         }
 
     },[])
-    const [title,setTitle] = useState('');
-    const [description,setDescription] = useState('');
+   
   return (
    <section className='write w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]'>
     <input 
