@@ -2,11 +2,12 @@ import React from 'react'
 import UseHooks from '../../hooks/useHooks';
 import Loading from '../../Loading/Loading';
 import PostCards from './postCards';
+import { useBlog } from '../../../context/context';
 
 const Posts = () => {
 
   const {data,loading} = UseHooks("posts");
-  console.log(data);
+  console.log("this is the post data",data);
 
 
   return (

@@ -11,12 +11,12 @@ import { useNavigate } from 'react-router-dom';
 const PostCards = ({ post }) => {
   const {title, userId ,desc,postImg,id:postId,created} = post; 
   const { data, loading } = useHooks("users"); 
-  const {currentUser} = useBlog();
+  const {currentUser,allUser} = useBlog();
   const navigate = useNavigate();
 
 
 
-  const getUserData = data?.find((user) => user?.id === userId);
+  const getUserData = allUser.find((user) => user?.id === userId);
 
   return (
  
@@ -32,15 +32,15 @@ const PostCards = ({ post }) => {
         <div className='py-1 leading-5 text-gray-500 line-clamp-2 ' dangerouslySetInnerHTML={{__html:desc}} />
 
       </div>
-      <div className='flex-[1] w-[400px] h-[150px] overflow-hidden'>
-          <img src={postImg} alt="" className='w-full h-full object-cover' />
-        </div>
+      {postImg && (<div className='flex-[1] w-[400px] h-[150px] overflow-hidden'>
+          <img src={postImg} alt="" className='w-[53rem] h-[10rem] object-cover' />
+        </div> )}
       </div>
       <div className='flex items-center justify-between w-full md:w-[70%] mt-[2rem] md:mt-0'>
         <p className='text-xs text-gray-400'>{readtime({ __html: desc })} min read.{moment(created).format("MMM DD")} </p>
        <div className='flex items-center gap-3'>
         <SavePost post={post} getUserData={getUserData}/>
-        {currentUser?.uid === userId && <Action post={post}/>}
+        {currentUser?.uid === userId && <Action postId={postId} title={title} desc={desc}/>}
        </div>
       </div>
  </>

@@ -5,15 +5,15 @@ import { useBlog } from '../../../context/context';
 import { useNavigate } from 'react-router-dom';
 
 const Follow = () => {
-  const { data, loading } = UseHooks("users");
-  const { currentUser } = useBlog();
+  const { data, loading} = UseHooks("users");
+  const { currentUser  } = useBlog();
   const [count, setCount] = useState(5);
   const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (!data || data.length === 0) return <p>No users found.</p>;
-
-  const users = data.slice(0, count).filter(user => user.userId !== currentUser?.uid);
+  console.log("this is the data length",data?.length);
+  const users = data && data.slice(0, count).filter(user => user.userId !== currentUser?.uid);
 
   return (
     <>
@@ -32,9 +32,9 @@ const Follow = () => {
           </div>
         );
       })}
-      {data.length > count && (
+      {data.length > count  && (
         <button
-          onClick={() => setCount(prev => prev + 5)}
+          onClick={() => setCount((prev) => users.length < data?.length && prev + 3)}
           className='text-green-400 hover:underline mb-3'
         >
           Click here to explore more

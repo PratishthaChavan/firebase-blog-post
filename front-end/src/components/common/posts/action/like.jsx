@@ -6,7 +6,7 @@ import { db } from '../../../../firebase/firebase';
 import UseSingleFetch from '../../../hooks/useSingleFetch';
 import { formatnumber } from '../../../../utils/helper';
 const Like = ({ postId }) => {
-  const { currentUser } = useBlog();
+  const { currentUser ,authModel,setAuthModel} = useBlog();
   const [isLiked, setIsLiked] = useState(false); 
   const { data, loading } = UseSingleFetch("posts", postId, "likes");
 
@@ -17,9 +17,10 @@ const Like = ({ postId }) => {
   }, [data, loading, currentUser?.uid]);
 
   const handleLike = async () => {
-    if (!currentUser) return;
+    
 
     try {
+     if(currentUser){
       const likeRef = doc(db, "posts", postId, "likes", currentUser.uid);
 
       if (isLiked) {
@@ -32,6 +33,10 @@ const Like = ({ postId }) => {
       
      
       setIsLiked(!isLiked);
+     }
+     else{
+      setAuthModel(true);
+     }
 
     } catch (error) {
       console.error("Error updating like:", error);

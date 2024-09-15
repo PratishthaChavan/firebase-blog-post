@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { db } from "../../../firebase/firebase";
-import { getDoc, setDoc } from "firebase/firestore";
+import { getDoc, increment, setDoc, updateDoc } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 import Posts from "./Posts";
 import { FaRegComments } from "react-icons/fa";
@@ -19,12 +19,17 @@ import Comments from "../comments/comments";
 import Like from "./action/like";
 import Sharepost from "./action/sharepost";
 import Recommended from "./recommended";
+import { useRef } from "react";
+
+
+
 const SinglePost = () => {
   const [post, setPost] = useState({});
   const { postId } = useParams();
   const [loading, setLoading] = useState("");
   const { currentUser } = useBlog();
   const navigate = useNavigate();
+  const isInitialRender = useRef(true);
   const fetchPost = async () => {
     try {
       const postRef = doc(db, "posts", postId);
@@ -48,6 +53,26 @@ const SinglePost = () => {
    
     fetchPost();
   }, [postId]);
+
+  useEffect(() => {
+    if (isInitialRender?.current) {
+      const incrementPageView = async() => {
+        try {
+          const ref = doc(db,"posts",postId);
+          await updateDoc(ref,{
+            pageview : increment(1),
+          },{merge:true})
+        } catch (error) {
+          console.log("pageView is not incremented");
+        }
+
+      }
+      incrementPageView();
+    }
+    isInitialRender.current = false;
+  },[])
+
+
   
 
   const { title, desc, postImg, username, created, image, userId } = post;
@@ -92,15 +117,14 @@ const SinglePost = () => {
             </div>
           </div>
           <div className="mt-[3rem]">
-            {postImg && postImg !== "undefined" ? (
+            {postImg && (
               <img
                 className="w-full h-[400px] object-cover"
                 src={postImg}
                 alt="Post image"
               />
-            ) : (
-              <p>Image not available</p>
-            )}
+            ) 
+            }
             <div
               className=" mt-6 "
               dangerouslySetInnerHTML={{ __html: desc }}

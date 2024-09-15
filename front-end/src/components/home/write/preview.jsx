@@ -20,33 +20,36 @@ const Preview = ({ setPublish, title, description }) => {
     const [isSubmitting, setIsSubmitting] = useState(false); // New state to handle multiple submissions
 
     const handleSubmit = async () => {
-        if (isSubmitting) return; // Prevent multiple submissions
+        if (isSubmitting) return; 
 
-        setIsSubmitting(true); // Set submitting state to true
+        setIsSubmitting(true); 
 
         try {
             if (preview.title === "" || desc === "" || tags.length === 0) {
                 alert('All fields are required');
-                setIsSubmitting(false); // Reset submitting state
+                setIsSubmitting(false); 
                 return;
             }
             if (preview.title.length < 15) {
                 alert("The title must be at least 15 characters long");
-                setIsSubmitting(false); // Reset submitting state
+                setIsSubmitting(false);
                 return;
             }
 
             const coll = collection(db, "posts");
+        let url;
+          if(imageUrl){
             const storageRef = ref(storage, `image/${preview.photo.name}`);
             await uploadBytes(storageRef, preview?.photo);
-            const imageUrl = await getDownloadURL(storageRef);
+            url = await getDownloadURL(storageRef);
+          }
             
             await addDoc(coll, {
                 userId: currentUser?.uid,
                 title: preview.title,
                 desc,
                 tags,
-                postImg: imageUrl,
+                postImg: url || "",
                 created: Date.now(),
                 pageview: 0,
             });

@@ -44,10 +44,10 @@ const Followbtn = ({ userId }) => {
             onClick={handleFollow}
             className={`
                 ${pathname === "/" ? " border  border-black " : "text-gray-500"} 
-                ${isFollow ? "px-2 rounded-full border border-black py-[0.2rem]" : " "}  `}
+                ${isFollow ? "text-gray-400 border-none" : " "}  `}
             
         >
-          {isFollow ? "Unfollowed" : "Followed"}
+          {isFollow ? "following" : "follow"}
         </button>
     );
 };

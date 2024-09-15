@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useBlog } from '../../context/context';
 import { Nav } from '../../data';
 import Auth from './Auth/Auth';
 const DemoHeader = () => {
     const [isActive,setIsActive] = useState(false);
-    const [modal,setModal] = useState(false); 
+  
+    const {authModel,setAuthModel} = useBlog();
    useEffect(() => {
     const scrollme = () => {
         window.scrollY > 50 ? setIsActive(true) : setIsActive(false);
     }
     window.addEventListener("scroll",scrollme);
-//'border-b border-black sticky top-0 z-50'
+
    },[])
   return (
     <header
@@ -32,11 +34,11 @@ const DemoHeader = () => {
                 ))}
                </div>
                <div className='relative'>
-                <button onClick={() => setModal(true)} className='hidden text-sm sm:flex items-center gap-5' >sign up</button>
+                <button onClick={() => setAuthModel(true)} className='hidden text-sm sm:flex items-center gap-5' >sign up</button>
                
                </div>
-               <Auth modal={modal} setModal={setModal}/>
-               <button onClick={() => setModal(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
+               <Auth modal={authModel} setModal={setAuthModel}/>
+               <button onClick={() => setAuthModel(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
                 ${isActive ? 'bg-blue-600' : 'bg-black' }`}>Get started</button>
             </div>
     

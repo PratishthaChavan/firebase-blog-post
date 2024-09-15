@@ -8,7 +8,7 @@ import Loading from '../components/Loading/Loading';
 
 import { onSnapshot ,collection , query, doc} from 'firebase/firestore';
 import { db } from '../firebase/firebase';
-
+import UseHooks from '../components/hooks/useHooks';
 const BlogContext = createContext();
 const Context = ({children}) => {
     const [title,setTitle] = useState('');
@@ -21,6 +21,7 @@ const Context = ({children}) => {
     const [showComment,setShowComment] = useState(false);
     const [commentLength,setCommentLength] = useState(0);
     const [updatePostData,setUpdatePostData] = useState({});
+    const [authModel,setAuthModel] = useState(false); 
     useEffect(() => {
    
        const unsubscribe = onAuthStateChanged(auth,(users)=> {
@@ -33,6 +34,7 @@ const Context = ({children}) => {
      }
   
        });
+
        return () => unsubscribe();
        
     },[currentUser]);
@@ -56,13 +58,17 @@ const Context = ({children}) => {
   
       getUser();
     }, []);
+
+    const { data : postdata,loading:postLoading} = UseHooks("posts");
+    
   
   return (
    
     <div > 
         <BlogContext.Provider value={{
           currentUser,setCurrentUser,allUser,userLoading,publish,setPublish,showComment,setShowComment
-          ,commentLength,setCommentLength,updatePostData,setUpdatePostData,title,setTitle,description,setDescription
+          ,commentLength,setCommentLength,updatePostData,setUpdatePostData,title,setTitle,description,setDescription,
+          postdata,postLoading,authModel,setAuthModel
              }}>{children}</BlogContext.Provider>
     </div>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import PostCards from '../../common/posts/postCards'
 
 const ProfileHome = ({getUserData}) => {
   return (
