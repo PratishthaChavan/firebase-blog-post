@@ -22,7 +22,8 @@ export const Discovers = [
    "Machine Learning",
    "Fashion",
    "Life stories",
-   "Art"
+   "Art",
+   "flower"
 ];
 
 export const discoverAction = [
@@ -34,5 +35,6 @@ export const discoverAction = [
     "Privacy",
     "Term",
     "About",
+    "flower"
 
 ];

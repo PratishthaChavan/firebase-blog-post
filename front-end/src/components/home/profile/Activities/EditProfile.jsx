@@ -42,6 +42,7 @@ const EditProfile = ({editModal,setEditModel,getUserData}) => {
         await uploadBytes(storageRef, form.userimage);
         imageurl = await getDownloadURL(storageRef);
       }
+
     
       try {
         const docRef = doc(db, "users", getUserData?.userId);
@@ -80,7 +81,7 @@ const EditProfile = ({editModal,setEditModel,getUserData}) => {
                 <div className='flex gap-[2rem]'>
                 <img className='w-[3.5rem] h-[3.5rem] min-h-[2rem] min-w-[2rem] object-cover border border-gray-400
                 rounded-full' 
-                src={imageurl ? imageurl : getUserData.image ? getUserData?.image :  "profile.jpg"} alt="" />
+                src={imageurl ? imageurl : getUserData.image ? getUserData?.image :  "/profile.jpg"} alt="" />
                 <>
                 <input 
                  onChange={(e) => {

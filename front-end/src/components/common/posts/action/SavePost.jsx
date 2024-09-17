@@ -7,12 +7,12 @@ import UseSingleFetch from '../../../hooks/useSingleFetch';
 
 const SavePost = ({ post }) => {
     const [isSaved, setIsSaved] = useState(false);
-    const { currentUser } = useBlog();
+    const { currentUser,setAuthModel } = useBlog();
     const { data, loading } = UseSingleFetch("users", currentUser?.uid, "savePost");
 
     useEffect(() => {
         if (data && post?.id) {
-            setIsSaved(data.find((item) => item.id === post.id));
+            setIsSaved(data.find((item) => item.id === currentUser?.uid));
         }
     }, [data, post?.id]);
 
@@ -29,6 +29,9 @@ const SavePost = ({ post }) => {
                 }
                 // Toggle the saved state after save/unsave action
                 setIsSaved(!isSaved);
+            }
+            else{
+                setAuthModel(true);
             }
         } catch (error) {
             console.error("Error saving post:", error);

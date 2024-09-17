@@ -94,7 +94,7 @@ alert("The post has been updated");
           </span>
           <div className='flex items-center relative'>
             <img 
-              src={getUserData?.image ? getUserData?.image : "profile.jpg"} 
+              src={getUserData?.image ? getUserData?.image : "/profile.jpg"} 
               alt="Profile" 
               className='w-[2.3rem] h-[2.3rem] object-cover rounded-full cursor-pointer'
             />
