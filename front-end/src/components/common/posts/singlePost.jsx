@@ -90,7 +90,7 @@ const SinglePost = () => {
                 navigate(`/profile/${userId}`);
               }}
               className="w-[3rem] h-[3rem] object-cover rounded-full cursor-pointer"
-              src={image}
+              src={image || "/profile.jpg"}
               alt=""
             />
             <div className="capitalize">

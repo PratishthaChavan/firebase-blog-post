@@ -16,6 +16,8 @@ const Comments = ({postId}) => {
   const getUserData = allUser.find((user) => user.id === currentUser?.uid);
   const [comments,setComments] = useState("");
   const {data,loading} = UseSingleFetch("posts" , postId ,"comments");
+
+
  
 
   const writeComments = async() => {
@@ -36,12 +38,14 @@ const Comments = ({postId}) => {
       console.log("error in comments ",error);
     }
   }
+ 
 
   useEffect(() => {
    if(data) {
     setCommentLength(data.length);
    }
   } ,[data]); 
+
 
   return (
   <>
@@ -80,7 +84,7 @@ const Comments = ({postId}) => {
     {data && data?.length === 0 ? (<p>This post has no comments </p>) : ( 
       <div className='border-t py-4 mt-8 flex flex-col gap-8'>
         {data && data.map((items,i) => (
-      loading ? <Loading/> : <Comment items={items}key={i} postId={postId}/>)
+      loading ? <Loading/> : <Comment items={items} key={i} postId={postId} commentId={items.id}/>)
     )}
       </div>
     ) }

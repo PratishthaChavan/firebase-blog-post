@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { IoMdClose } from "react-icons/io";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import TagsInput from 'react-tagsinput';
 import { db, storage } from '../../../firebase/firebase';
 import { useBlog } from '../../../context/context';
@@ -17,7 +17,8 @@ const Preview = ({ setPublish, title, description }) => {
     const navigate = useNavigate();
     const [preview, setPreview] = useState({ title: "", photo: "" });
     const [tags, setTags] = useState([]);
-    const [isSubmitting, setIsSubmitting] = useState(false); // New state to handle multiple submissions
+    const [isSubmitting, setIsSubmitting] = useState(false); 
+    const [username, setUsername] = useState("");
 
     const handleSubmit = async () => {
         if (isSubmitting) return; 
@@ -37,15 +38,15 @@ const Preview = ({ setPublish, title, description }) => {
             }
 
             const coll = collection(db, "posts");
-        let url;
-          if(imageUrl){
-            const storageRef = ref(storage, `image/${preview.photo.name}`);
-            await uploadBytes(storageRef, preview?.photo);
-            url = await getDownloadURL(storageRef);
-          }
+            let url;
+            if (imageUrl) {
+                const storageRef = ref(storage, `image/${preview.photo.name}`);
+                await uploadBytes(storageRef, preview.photo);
+                url = await getDownloadURL(storageRef);
+            }
             
             await addDoc(coll, {
-                userId: currentUser?.uid,
+                userId: currentUser.uid,
                 title: preview.title,
                 desc,
                 tags,
@@ -64,7 +65,7 @@ const Preview = ({ setPublish, title, description }) => {
         } catch (error) {
             console.error("Error adding document: ", error);
         } finally {
-            setIsSubmitting(false); // Reset submitting state
+            setIsSubmitting(false); 
         }
     };
 
@@ -82,12 +83,27 @@ const Preview = ({ setPublish, title, description }) => {
         imgRef.current.click();
     };
 
+    const fetchUsername = async () => {
+        if (currentUser) {
+            const userRef = doc(db, "users", currentUser.uid);
+            const userSnapshot = await getDoc(userRef);
+            if (userSnapshot.exists()) {
+                setUsername(userSnapshot.data().username);
+            } else {
+                console.log("No such document!");
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchUsername();
+    }, [currentUser]); 
     return (
-        <section className='absolute inset-0 bg-white z-30'>
+        <section className='absolute inset-0 bg-gray-400 z-30'>
             <div className='size my-[2rem]'>
                 <span
                     onClick={() => setPublish(false)}
-                    className='absolute right-[1rem] md:right-5rem] top-[3rem] text-2xl cursor-pointer'>
+                    className='absolute right-[1rem] md:right-5 top-[3rem] text-2xl cursor-pointer'>
                     <IoMdClose />
                 </span>
                 <div className='mt-[8rem] flex flex-col md:flex-row gap-10'>
@@ -97,7 +113,7 @@ const Preview = ({ setPublish, title, description }) => {
                             style={{ backgroundImage: `url(${imageUrl})` }}
                             onClick={handleClick}
                             className='w-full h-[300px] object-cover bg-gray-100 my-3 grid 
-                            place-items-center cursor-pointer bg-cover bg-no-repeat'>
+                            place-items-center cursor-pointer bg-cover'>
                             Add Image
                         </div>
                         <input
@@ -113,12 +129,12 @@ const Preview = ({ setPublish, title, description }) => {
                         <ReactQuill
                             className='py-3 border-b border-gray-300'
                             placeholder='Preview story...'
-                            theme="bubble" value={desc}
+                            theme="snow" value={desc}
                             onChange={setDesc} />
                         <p className='text-green-500 font-sans'><span className='font-bold'>Note:</span> Changes here will affect how your story appears in Public</p>
                     </div>
                     <div className='flex-[1] flex flex-col mb-5 gap-4 md:mb-0'>
-                        <h3 className='text-3xl font-bold caption-bottom'>Publish to: <span>Username</span></h3>
+                        <h3 className='text-3xl font-bold caption-bottom'>Publish to: <span>{username}</span></h3>
                         <p>Add and change topics so readers know what the story is about</p>
 
                         <TagsInput value={tags} onChange={setTags} />
@@ -133,7 +149,7 @@ const Preview = ({ setPublish, title, description }) => {
                 </div>
             </div>
         </section>
-    )
+    );
 }
 
 export default Preview;

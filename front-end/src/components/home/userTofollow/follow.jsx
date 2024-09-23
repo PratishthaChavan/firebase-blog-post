@@ -22,7 +22,7 @@ const Follow = () => {
         return (
           <div key={userId} className='flex items-start gap-2 my-4'>
             <div className='flex-1 flex items-center gap-2 cursor-pointer' onClick={() => navigate(`/profile/${userId}`)}>
-              <img className='w-[3rem] h-[3rem] object-cover' src={image || "/profile.jpg"} alt="userImage" />
+              <img className='w-[3rem] h-[3rem] rounded-full object-cover' src={image || "/profile.jpg"} alt="userImage" />
               <div className='flex flex-col gap-1'>
                 <h2 className='font-bold capitalize'>{username}</h2>
                 <span className='text-gray-500 leading-4 text-sm line-clamp-2'>{Bio || "This user doesn't have a bio"}</span>

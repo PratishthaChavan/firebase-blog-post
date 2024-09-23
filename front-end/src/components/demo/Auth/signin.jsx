@@ -20,7 +20,7 @@ const Signin = ({setModel}) => {
       alert("Please enter all required details");
       return;
     }
-    else{
+    try{
       const {user} = await createUserWithEmailAndPassword(
         auth,
         form.email,
@@ -42,6 +42,13 @@ const Signin = ({setModel}) => {
     navigate('/');
     setModel(false);
    }
+    }
+    catch(error){
+      if (error.code === 'auth/email-already-in-use') {
+        setErrorMessage("This email is already registered. Please try logging in.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
     }
   }
   return (
