@@ -2,6 +2,7 @@ import React from 'react'
 import { useBlog } from '../../../../context/context';
 import { TfiCommentsSmiley } from "react-icons/tfi";
 import { formatnumber } from '../../../../utils/helper';
+
 const OpenComment = () => {
          
     const {setShowComment,commentLength} = useBlog();

@@ -8,14 +8,14 @@ import Signin from './signin';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import SignInUser from './signup'; // Import the SignInUser component
+import SignInUser from './signup'; 
 
 const Auth = ({ modal, setModal }) => {
   const [createUser, setCreateUser] = useState(false);
-  const [showSignInForm, setShowSignInForm] = useState(false);  // State to control sign-in form display
+  const [showSignInForm, setShowSignInForm] = useState(false); 
   const navigate = useNavigate();
 
-  // Google authentication
+  
   const googleAuth = async () => {
     try {
       const createUser = await signInWithPopup(auth, provider);
@@ -51,7 +51,7 @@ const Auth = ({ modal, setModal }) => {
           onClick={() => setModal(false)}><FaRegTimesCircle /></button>
         <div className='flex flex-col items-center justify-center gap-[3rem]'>
 
-          {/* Conditionally render SignInUser if the sign-in button is clicked */}
+     
           {showSignInForm ? (
             <SignInUser />
           ) : (

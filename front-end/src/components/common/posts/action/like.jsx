@@ -5,10 +5,12 @@ import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../../firebase/firebase';
 import UseSingleFetch from '../../../hooks/useSingleFetch';
 import { formatnumber } from '../../../../utils/helper';
+import Heart from "react-animated-heart";
 const Like = ({ postId }) => {
   const { currentUser ,authModel,setAuthModel} = useBlog();
   const [isLiked, setIsLiked] = useState(false); 
   const { data, loading } = UseSingleFetch("posts", postId, "likes");
+ 
 
 
   useEffect(() => {

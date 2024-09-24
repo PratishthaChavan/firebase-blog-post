@@ -11,6 +11,7 @@ import Profile from "./components/home/profile/profile";
 import SinglePost from "./components/common/posts/singlePost";
 import EditPost from "./components/common/posts/action/EditPost";
 import Filter from "./components/demo/filter";
+import ChatRoom from "./ChatRoom";
 function App() {
  
   const { currentUser } = useBlog();
@@ -26,6 +27,7 @@ function App() {
          <Route path="/post/:postId" element={<SinglePost/>}></Route>
          <Route path="/editpost/:postId" element={<EditPost/>}></Route>
          <Route path="/filter/:tag" element={<Filter/>}></Route>
+         <Route path="/chatroom" element={<ChatRoom/>}></Route>
         </Routes>
     </>
   )

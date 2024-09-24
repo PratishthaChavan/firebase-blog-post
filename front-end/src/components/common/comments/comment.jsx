@@ -7,11 +7,12 @@ import { deleteDoc, doc, updateDoc, setDoc, addDoc, collection, getDocs } from '
 import { db } from '../../../firebase/firebase';
 import Nestedcomment from './nestedcomment';
 
+import { BsFillSendPlusFill } from "react-icons/bs";
 const Comment = ({ items: comment, postId, commentId }) => {
     const { allUser, currentUser } = useBlog();
     const getUserData = allUser.find((users) => users.id === comment?.userId);
     const { userId, Usercomments, created } = comment;
-    
+
     const [more, setMore] = useState(false);
     const [edit, setIsEdit] = useState(false);
     const [editComment, setEditComment] = useState("");
@@ -20,6 +21,7 @@ const Comment = ({ items: comment, postId, commentId }) => {
     const [replyContent, setReplyContent] = useState("");
     const [replies, setReplies] = useState([]);
     const [showNestedReplies,setShowNestedReply] = useState(false);
+    
 
     useEffect(() => {
         const fetchReplies = async () => {
@@ -34,6 +36,8 @@ const Comment = ({ items: comment, postId, commentId }) => {
 
     const handleEdit = async () => {
         try {
+
+          
             const ref = doc(db, "posts", postId, "comments", commentId); 
             await updateDoc(ref, {
                 Usercomments: editComment,
@@ -59,10 +63,16 @@ const Comment = ({ items: comment, postId, commentId }) => {
             console.log("Internal server error");
         }
     }
+
+  
  
 
     const nestComments = async () => {
         try {
+            if (replyContent.trim() === ""){
+                alert("Enter the reply");
+            }
+            else{
             const replyRef = collection(db, "posts", postId, "comments", commentId, "Replies");
             await addDoc(replyRef, {
                 replyContent: replyContent,
@@ -74,8 +84,9 @@ const Comment = ({ items: comment, postId, commentId }) => {
             setShowReply(false); 
           
             const repliesSnapshot = await getDocs(replyRef);
+            
             const repliesList = repliesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setReplies(repliesList);
+                setReplies(repliesList);}
         } catch (error) {
             console.log("Error adding reply:", error);
         }
@@ -108,7 +119,7 @@ const Comment = ({ items: comment, postId, commentId }) => {
                                 )}
                                 {currentUser && currentUser?.uid !== userId && (
                                     <div className='flex justify-end'>
-                                        <button className='rounded-full border border-gray-400 bg-green-500 px-2 py-1' onClick={sendFriendRequest}>
+                                        <button className='rounded-full border border-gray-400 bg-green-500 px-2 py-1' >
                                             send request
                                         </button>
                                     </div>
@@ -127,6 +138,9 @@ const Comment = ({ items: comment, postId, commentId }) => {
                     <button className='text-blue-500' onClick={() => setShowReply(!showReply)}>
                         {showReply ? "cancel " : "Reply"}
                     </button>
+                    <button className='text-blue-500 mt-2' onClick={() => setShowNestedReply(!showNestedReplies)}>
+                           {showNestedReplies ? "Hide replies" : "Show replies"}
+                        </button>
                     {showReply && (
                         <div>
                         <textarea
@@ -135,15 +149,18 @@ const Comment = ({ items: comment, postId, commentId }) => {
                             className='w-full p-2 border rounded-md outline-none text-sm'
                             placeholder='Write your reply...'
                         ></textarea>
-                        <button onClick={nestComments}>Send</button>
-                        <button >Show replies</button>
+                       <div className='flex gap-2'>
+                       
+                       
+                        <button onClick={nestComments}><BsFillSendPlusFill /></button>
+                       </div>
                         
                         </div>
                         
                     )}
-                        
+                      
                     
-                    {replies.length > 0 && (
+                    {showNestedReplies && replies.length > 0 && (
                         <div className='mt-4'>
                             {replies.map(reply => (
                                 <Nestedcomment key={reply.id} 
@@ -165,6 +182,7 @@ const Comment = ({ items: comment, postId, commentId }) => {
                     <div className='flex items-center justify-end gap-2'>
                         <button onClick={() => setIsEdit(false)} className='rounded-full text-sm w-fit font-serif bg-red-400 py-1 px-2'>Cancel</button>
                         <button onClick={handleEdit} className='rounded-full text-sm w-fit font-serif bg-green-400 py-1 px-2'>Update</button>
+                        
                     </div>
                 </div>
             )}
