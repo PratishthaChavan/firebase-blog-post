@@ -10,7 +10,15 @@ import Nestedcomment from './nestedcomment';
 import { BsFillSendPlusFill } from "react-icons/bs";
 const Comment = ({ items: comment, postId, commentId }) => {
     const { allUser, currentUser } = useBlog();
+    
+    
+
+    
+
+  
+    
     const getUserData = allUser.find((users) => users.id === comment?.userId);
+   
     const { userId, Usercomments, created } = comment;
 
     const [more, setMore] = useState(false);
@@ -52,7 +60,33 @@ const Comment = ({ items: comment, postId, commentId }) => {
             console.log("Internal server error:", error);
         }
     }
+   
+    const currentUserData = allUser.find(user => user.id === currentUser?.uid);
+    const sendRequest =async() => {
+       try {
+        if(currentUser){
+          
+            
+            const requestRef = collection(db,"users",userId,"request");
+        await addDoc(requestRef,{
+            Sendername: currentUserData?.username,
+            ProfileImage : currentUserData?.image,
+            
+            receiverUserId : comment?.userId,
+            status: "pending",
+            created: Date.now()
+        })
+        alert("the request is send to receiver");
+        }
+        else{
+            alert("the user is not logged");
+        }
+       } catch (error) {
+        console.log(error);
+       }
+    }
 
+  
     const removeComments = async () => {
         try {
             const ref = doc(db, "posts", postId, "comments", commentId);
@@ -119,7 +153,9 @@ const Comment = ({ items: comment, postId, commentId }) => {
                                 )}
                                 {currentUser && currentUser?.uid !== userId && (
                                     <div className='flex justify-end'>
-                                        <button className='rounded-full border border-gray-400 bg-green-500 px-2 py-1' >
+                                        <button
+                                        onClick={sendRequest}
+                                         className='rounded-full border border-gray-400 bg-green-500 px-2 py-1' >
                                             send request
                                         </button>
                                     </div>

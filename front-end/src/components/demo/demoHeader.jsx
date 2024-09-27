@@ -39,6 +39,7 @@ const DemoHeader = () => {
                </div>
                <Auth modal={authModel} setModal={setAuthModel}/>
                <button onClick={() => setAuthModel(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
+               active:scale-95 transition-all duration-75
                 ${isActive ? 'bg-blue-600' : 'bg-black' }`}>Get started</button>
             </div>
     

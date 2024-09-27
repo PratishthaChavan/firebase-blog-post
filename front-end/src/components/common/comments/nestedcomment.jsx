@@ -16,7 +16,7 @@ const Nestedcomment = ({ reply ,commentId,postId,replyId}) => {
     const [isEdit,setIsEdit] = useState(false);
     const navigate = useNavigate();
     
-    console.log(reply);
+    
     const removeNesteComment =  async() => {
         try {
             const Commentref = doc(db, "posts", postId, "comments", commentId,"Replies",replyId);

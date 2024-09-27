@@ -9,6 +9,8 @@ import { discoverAction } from '../../../data';
 import EditProfile from './Activities/EditProfile'
 import { useBlog } from '../../../context/context'
 import { useParams } from 'react-router-dom';
+import Inbox from './Inbox'
+
 import UseSingleFetch from '../../hooks/useSingleFetch'
 
 const Profile = () => {
@@ -29,6 +31,10 @@ const Profile = () => {
         {
             title:"About",
             comp: ProfileAbout
+        },
+        {
+            title:"Received request",
+            comp:Inbox
         }
     ]
     const [currentActivity,setCurrentActivity] = useState(activities[0]);
@@ -36,7 +42,7 @@ const Profile = () => {
     const {data:follow} = UseSingleFetch("users",userId,"follow");
     const {data:follower} = UseSingleFetch("users", userId,"follower");
 
-    console.log(getUserData);
+  
   return (
    <section className='size flex gap-[4rem] relative'>
     <div className='mt-[9rem] flex-[2]'>

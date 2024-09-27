@@ -12,7 +12,7 @@ const Follow = () => {
 
   if (loading) return <p>Loading...</p>;
   if (!data || data.length === 0) return <p>No users found.</p>;
-  console.log("this is the data length",data?.length);
+  
   const users = data && data.slice(0, count).filter(user => user.userId !== currentUser?.uid);
 
   return (

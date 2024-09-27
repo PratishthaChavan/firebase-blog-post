@@ -38,3 +38,31 @@ export const discoverAction = [
     "flower"
 
 ];
+
+export const dummydata = [
+    {
+        text: "hii",
+        user: "me"
+    },
+    {
+        text: "hello",
+        user: "others"
+    },
+    {
+        text: "How are you",
+        user: "me"
+    },
+    {
+        text: "i am fine",
+        user: "others"
+    },
+    {
+        text: "how is it going",
+        user: "others"
+    },
+    {
+        text: "Its great",
+        user: "me"
+    },
+    
+]
