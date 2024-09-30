@@ -27,7 +27,7 @@ function App() {
          <Route path="/post/:postId" element={<SinglePost/>}></Route>
          <Route path="/editpost/:postId" element={<EditPost/>}></Route>
          <Route path="/filter/:tag" element={<Filter/>}></Route>
-         <Route path="/chatroom" element={<ChatRoom/>}></Route>
+         <Route path="/chatroom/:chatId" element={<ChatRoom/>}></Route>
         </Routes>
     </>
   )

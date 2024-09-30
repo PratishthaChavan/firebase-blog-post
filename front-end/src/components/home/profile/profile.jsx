@@ -10,6 +10,7 @@ import EditProfile from './Activities/EditProfile'
 import { useBlog } from '../../../context/context'
 import { useParams } from 'react-router-dom';
 import Inbox from './Inbox'
+import AcceptedRequest from './Activities/acceptedRequest'
 
 import UseSingleFetch from '../../hooks/useSingleFetch'
 
@@ -35,6 +36,10 @@ const Profile = () => {
         {
             title:"Received request",
             comp:Inbox
+        },
+        {
+          title: "Accepted",
+          comp: AcceptedRequest
         }
     ]
     const [currentActivity,setCurrentActivity] = useState(activities[0]);

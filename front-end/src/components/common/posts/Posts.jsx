@@ -7,7 +7,7 @@ import { useBlog } from '../../../context/context';
 const Posts = () => {
 
   const {data,loading} = UseHooks("posts");
-  console.log("this is the post data",data);
+ 
 
 
   return (

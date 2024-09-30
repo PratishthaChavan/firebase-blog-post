@@ -32,7 +32,7 @@ const Context = ({children}) => {
      else{
       setCurrentUser(null);
       
-     } cxzasDFGHJGFDSA
+     } 
   
        });
 

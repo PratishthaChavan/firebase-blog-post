@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import Logo from './design/logo';
 const ChatRoom = () => {
   const [message,setMessage] = useState(null);
-  const {user,seUser} = useBlog();
+  const {user,setUser} = useBlog();
   const [text,setText] = useState("");
   const lastMsg = useRef(null);
   const fetchMessage = () => {

@@ -62,20 +62,23 @@ const Comment = ({ items: comment, postId, commentId }) => {
     }
    
     const currentUserData = allUser.find(user => user.id === currentUser?.uid);
+    
+
+   
     const sendRequest =async() => {
        try {
         if(currentUser){
-          
-            
-            const requestRef = collection(db,"users",userId,"request");
+          const requestRef = collection(db,"users",userId,"request");
         await addDoc(requestRef,{
+            senderId : currentUserData?.id,
             Sendername: currentUserData?.username,
             ProfileImage : currentUserData?.image,
-            
+            senderEmail: currentUserData?.email,
             receiverUserId : comment?.userId,
             status: "pending",
             created: Date.now()
         })
+        
         alert("the request is send to receiver");
         }
         else{
@@ -85,6 +88,8 @@ const Comment = ({ items: comment, postId, commentId }) => {
         console.log(error);
        }
     }
+
+
 
   
     const removeComments = async () => {
