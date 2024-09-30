@@ -5,20 +5,49 @@ import Message from './utils/Message';
 import { useBlog } from './context/context';
 import { useRef } from 'react';
 import Logo from './design/logo';
+import { useParams } from 'react-router-dom';
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { db } from './firebase/firebase';
 const ChatRoom = () => {
-  const [message,setMessage] = useState(null);
+  const [message,setMessage] = useState([]);
+  const {currentUser} = useBlog();
+  const [messageList,setMessageList] = useState([]);
   const {user,setUser} = useBlog();
   const [text,setText] = useState("");
   const lastMsg = useRef(null);
+
+  const {chatId} = useParams();
+  
   const fetchMessage = () => {
-    const chatData = dummydata;
-    setMessage(chatData);
+  const messageRef = collection(db,"chatrooms",chatId,"chatmessages");
+  const q = query(messageRef,orderBy("timestamp","asc"));
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const messageData = snapshot.docs.map(doc => ({
+      id:doc.id,...doc.data()
+    }))
+    setMessage(messageData);
+  })
+
     
 
   }
+  const sendMessagedata = async() => {
+  if (text === "") return;
+  else {
+    const messages = {
+      chatmessage : text,
+      senderId : currentUser?.uid,  
+      timestamp: serverTimestamp()
+    } 
+    const msgRef = collection(db,"chatrooms",chatId,"chatmessages");
+     await addDoc(msgRef,messages);
+    setText("");
+  }
+
+  } 
   useEffect(() => {
     fetchMessage();
-  },[])
+  },[chatId])
   useEffect(() => {
     if(lastMsg){
       lastMsg.current.scrollIntoView();
@@ -30,7 +59,7 @@ const ChatRoom = () => {
       <>
         {message?.map((msg) => {
           return (
-          <Message msg={msg}/>
+          <Message msg={msg} key={msg.id}  currentUserId={currentUser?.uid}/>
           )
 
         })}
@@ -75,7 +104,7 @@ const ChatRoom = () => {
             type="text" 
             className='w-full rounded-md py-1' />
             <button
-            onClick={handlesend}
+            onClick={sendMessagedata}
              className='font-bold'>send</button>
         </div>
         </div>

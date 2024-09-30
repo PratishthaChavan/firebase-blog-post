@@ -33,6 +33,12 @@ const AcceptedRequest = () => {
     useEffect(() => {
         fetchReceiverData(); 
     }, [currentUser]); 
+    const handleChatroom = (senderId) => {
+        const chatId = currentUser?.uid < senderId
+            ? `${currentUser?.uid}_${senderId}`
+            : `${senderId}_${currentUser?.uid}`;
+        navigate(`/chatroom/${chatId}`);
+    };
 
     return (
         <div className='flex gap-2 flex-col '>
@@ -53,6 +59,7 @@ const AcceptedRequest = () => {
                       <p> {new Date(notification.timestamp).toLocaleString()}</p>
                             <p>{notification.status}</p>
                             <button 
+                            onClick={handleChatroom}
                             
                             className='bg-green-400 text-black rounded-full px-2 py-1 '>Chatroom</button>
                            

@@ -5,7 +5,7 @@ import { useBlog } from '../../../context/context';
 import { db } from '../../../firebase/firebase';
 import { setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import { getDoc } from 'firebase/firestore';
 const Inbox = () => {
     const { data, loading } = UseHooks("users"); 
     const {currentUser,allUser} = useBlog();
@@ -36,9 +36,28 @@ const Inbox = () => {
  
 
     const handleOpenChatroom = async(receiverId,senderId) => {
-        const chatId = `${currentUser?.uid}_${request.senderId}`;
+       try {
+        const chatId = currentUser?.uid < receiverId
+        ? `${currentUser?.uid}_${receiverId}`
+        : `${receiverId}_${currentUser?.uid}`;
 
-        navigate("/chatroom");
+
+    const chatRef = doc(db, "chatrooms", chatId);
+    const chatroomSnap = await getDoc(chatRef);
+
+    if (!chatroomSnap.exists()) {
+       
+        await setDoc(chatRef, {
+            members: [currentUser?.uid, receiverId],
+            createdAt: Date.now()
+        });
+    }
+
+    
+    navigate(`/chatroom/${chatId}`);
+       } catch (error) {
+        console.log(error);
+       }
     }
 
     const updateRequestStatus = async(requestId,newstatus,senderId) => {
@@ -96,17 +115,17 @@ const Inbox = () => {
                          {acceptedRequest.length > 0 && (
                 <div >
                     
-                    {acceptedRequest.map( requestId => (
-                       <div key={requestId} >
-                         <button  
-                         onClick={handleOpenChatroom}
-                         className='bg-blue-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
-                                
-                        >
-                          chatroom 
-                        </button>
-                       </div>
-                    ))}
+                    {acceptedRequest.map(({ requestId, senderId }) => (
+    <div key={requestId} >
+        <button  
+            onClick={() => handleOpenChatroom(senderId)}
+            className='bg-blue-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
+        >
+            Chatroom 
+        </button>
+    </div>
+))
+}
                 </div>
             )}
                        </div>
