@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useBlog } from '../../../../context/context';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../../firebase/firebase';
-import ChatRoom from '../../../../ChatRoom';
+
 import { useNavigate } from 'react-router-dom';
 
 const AcceptedRequest = () => {
@@ -59,7 +59,7 @@ const AcceptedRequest = () => {
                       <p> {new Date(notification.timestamp).toLocaleString()}</p>
                             <p>{notification.status}</p>
                             <button 
-                            onClick={handleChatroom}
+                            onClick={() => handleChatroom(notification.receiverId)}
                             
                             className='bg-green-400 text-black rounded-full px-2 py-1 '>Chatroom</button>
                            
