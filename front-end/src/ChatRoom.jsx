@@ -4,7 +4,7 @@
   import Message from './utils/Message';
   import { useBlog } from './context/context';
   import { useRef } from 'react';
-
+  import { useNavigate } from 'react-router-dom';
   import { useParams } from 'react-router-dom';
   import { addDoc, collection, doc, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
 
@@ -16,7 +16,7 @@
     const {user,setUser} = useBlog();
     const [text,setText] = useState("");
     const lastMsg = useRef(null);
-
+    const navigate = useNavigate();
     const {chatId} = useParams();
     const [senderName, setSenderName] = useState('');
     const [receiverName, setReceiverName] = useState('');
@@ -67,7 +67,7 @@
       
       }
 
-      useState(() => {
+      useEffect(() => {
         fetchUserName();
       },[chatId]);
     const sendMessagedata = async() => {
@@ -88,6 +88,9 @@
 
     } 
     
+    const handleLeave = () => {
+      navigate(-1);
+    }
 
 
     useEffect(() => {
@@ -127,6 +130,7 @@
               
                   
                   <button 
+                  onClick={handleLeave}
                   className='font-bold bg-blue-700 text-yellow-300 rounded-lg px-2 hover:bg-black active:scale-95
                   transition-all duration-75'>Leave</button>
               </nav>

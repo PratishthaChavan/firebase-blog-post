@@ -70,7 +70,7 @@ const Comment = ({ items: comment, postId, commentId }) => {
         if(currentUser){
           const requestRef = collection(db,"users",userId,"request");
         await addDoc(requestRef,{
-            senderId : currentUserData?.id,
+            senderId : currentUser?.uid,
             Sendername: currentUserData?.username,
             ProfileImage : currentUserData?.image,
             senderEmail: currentUserData?.email,
