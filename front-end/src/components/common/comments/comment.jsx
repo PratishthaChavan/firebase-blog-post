@@ -50,11 +50,12 @@ const Comment = ({ items: comment, postId, commentId }) => {
             await updateDoc(ref, {
                 Usercomments: editComment,
                 created: Date.now(),
-                userId: currentUser?.uid
+                userId: currentUser?.uid,
+                
             });
             setEditComment('');
             setIsEdit(false);
-            setDrop(false);
+            setDrop(false); 
             alert("The comment is updated");
         } catch (error) {
             console.log("Internal server error:", error);

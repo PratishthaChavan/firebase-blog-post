@@ -7,6 +7,7 @@ import {useNavigate } from 'react-router-dom';
 import { auth,db } from '../../../firebase/firebase';
 const Signin = ({setModel}) => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [form,setForm] = useState({
     username:"",
     email:"",
@@ -57,6 +58,9 @@ const Signin = ({setModel}) => {
         <p className='w-full sm:w-[25rem] mx-auto py-[1rem]'>
             Enter your Details
         </p>
+        {errorMessage && (
+        <div className="text-red-500 mb-4">{errorMessage}</div>
+      )}
         <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
         <Input
           type="text"

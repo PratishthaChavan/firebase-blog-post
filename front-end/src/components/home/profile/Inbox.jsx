@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, updateDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import UseHooks from '../../hooks/useHooks';
 import { useBlog } from '../../../context/context';
@@ -33,6 +33,9 @@ const Inbox = () => {
     useEffect(() => {
         fetchRequest();
     }, [currentUser]);
+
+
+
     
     const handleOpenChatroom = async(receiverId) => {
         try {
@@ -49,6 +52,7 @@ const Inbox = () => {
             const receiverName =  receiverDoc.data().username;
            
                 await setDoc(chatRef, {
+                    chatId: chatId,
                     members: [currentUser?.uid, receiverId],
                     createdAt: Date.now(),
                     senderName: senderName,
@@ -59,7 +63,8 @@ const Inbox = () => {
             }
            
     
-            navigate(`/chatroom/${chatId}`);
+            navigate(`/chatrooms?email=${currentUserData?.email}`);
+            console.log(currentUserData?.email);
         } catch (error) {
             console.log(error);
         }
@@ -115,6 +120,9 @@ const Inbox = () => {
                             <div className='flex items-end justify-end gap-2'>
                                 {request.status === "pending" ? (
                                     <>
+                                      <button onClick={() => navigate("/chatroom")} >
+                                        chatroom
+                                      </button>
                                         <button 
                                             className='bg-green-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
                                             onClick={() => updateRequestStatus(request.id, "accepted", request.senderId)}>
@@ -132,6 +140,7 @@ const Inbox = () => {
                                         className='bg-blue-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'>
                                         Chatroom
                                     </button>
+                                    
                                 ) : ( 
                                     <p className='text-red-500'>Request Declined</p>
                                 )}

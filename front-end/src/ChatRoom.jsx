@@ -32,20 +32,10 @@
       
       setMessage(messageData);
     })
+}
 
 
-
-    
-
-
-      
-
-    }
-
-
-    
-
-    const fetchUserName = async() => {
+   const fetchUserName = async() => {
       try {
         const chatRef = doc(db,"chatrooms",chatId);
         const getdata = await getDoc(chatRef);
@@ -61,30 +51,26 @@
       } catch (error) {
         console.log(error);
       }
+}
 
-
-  
-      
-      }
-
-      useEffect(() => {
+useEffect(() => {
         fetchUserName();
       },[chatId]);
-    const sendMessagedata = async() => {
-    if (text === "") return;
-    else {
-      const messages = {
-        chatmessage : text,
-        senderId : currentUser?.uid,  
-        sendername: senderName,
-        
-        receivername: receiverName,
-        timestamp: serverTimestamp()
-      } 
-      const msgRef = collection(db,"chatrooms",chatId,"chatmessages");
-      await addDoc(msgRef,messages);
-      setText("");
-    }
+      const sendMessagedata = async() => {
+      if (text === "") return;
+      else {
+        const messages = {
+          chatmessage : text,
+          senderId : currentUser?.uid,  
+          sendername: senderName,
+          
+          receivername: receiverName,
+          timestamp: serverTimestamp()
+        } 
+        const msgRef = collection(db,"chatrooms",chatId,"chatmessages");
+        await addDoc(msgRef,messages);
+        setText("");
+      }
 
     } 
     

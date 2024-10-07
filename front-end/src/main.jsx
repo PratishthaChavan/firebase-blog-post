@@ -7,11 +7,11 @@ import 'react-quill/dist/quill.bubble.css';
 import 'react-tagsinput/react-tagsinput.css';
 import { BrowserRouter } from 'react-router-dom'
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <>
      <BrowserRouter>
       <Context>
          <App/>
       </Context>
      </BrowserRouter>
-  </StrictMode>
+  </>
 )

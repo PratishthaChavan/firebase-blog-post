@@ -6,10 +6,10 @@ import { db } from '../../../../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 
 const AcceptedRequest = () => {
-    const { currentUser } = useBlog();
+    const { currentUser,allUser } = useBlog();
     const [acceptedList, setAcceptedList] = useState([]);
     const navigate = useNavigate();
-
+    const currentUserData = allUser.find(user => user.id === currentUser?.uid);
     const fetchReceiverData = async () => {
         if (!currentUser) return; 
 
@@ -37,7 +37,7 @@ const AcceptedRequest = () => {
         const chatId = currentUser?.uid < senderId
             ? `${currentUser?.uid}_${senderId}`
             : `${senderId}_${currentUser?.uid}`;
-        navigate(`/chatroom/${chatId}`);
+            navigate(`/chatrooms?email=${currentUserData?.email}`);
     };
 
     return (
