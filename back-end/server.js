@@ -1,87 +1,85 @@
+
 const express = require("express");
 const app = express();
-const port = 4000;
-const {Server} = require("socket.io");
-const {createServer} = require("http");
+const port = 3000;
+const { Server } = require("socket.io");
+const { createServer } = require("http");
 const cors = require("cors");
-
 
 const server = createServer(app);
 
 
-
-
 const users = {};
 
-const io = new Server(server,{
-    cors:{
-        origin: ["http://localhost:5173", "http://localhost:5174"], 
-       methods:["GET","POST"],
-       credentials:true
-    }
-});
-app.use(cors({
+
+const io = new Server(server, {
+  cors: {
     origin: ["http://localhost:5173", "http://localhost:5174"], 
-    methods:["GET","POST"],
-    credentials:true
- }));
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:5174"], 
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
+app.get("/", (req, res) => { 
+  res.send("hello world");
+});
+
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
 
 
+  socket.on("register", ({ email, userId, username  }) => {
+    if (userId && email  && username) {
 
-app.get("/",(req,res)=> { 
-    res.send("hello world");
-})
+      users[userId] = { socketId: socket.id, email: email,username:username };
+      console.log(users)
+      socket.userId = userId; 
+      console.log(`User registered: ${email} (${username}) with userId: ${userId} and socket ID: ${socket.id}`);
+    } else {
+      console.log("Registration failed: Missing userId or email");
+    }
+  }); 
 
-io.on("connection",(socket) => {
+ 
+  socket.on("join-room", (chatId) => {
+    socket.join(chatId);
+    console.log(`User ${socket.userId} joined room: ${chatId}`);
+  });
 
-    socket.on("register", (email) => {
-        users[email] = socket.id;
-        console.log(`User registered: ${email} with socket ID: ${socket.id}`);
-    }); 
-    
-    console.log("user connected",socket.id);
-    socket.on("message",({message,chatId}) =>{
-        console.log({chatId,message});
-        socket.to(chatId).emit("received-message", message);
+ 
+  socket.on("message", ({ message, chatId }) => {
+    console.log(`Message received in room ${chatId}:`, message);
+    const sender = users[socket.userId];
+    if (sender) {
+      const timestamp = Date.now();
+      io.to(chatId).emit("received-message", { 
+        senderId: socket.userId, 
+        senderEmail: sender.email, 
+        message: message, 
+        username:sender.username,
+        timestamp 
+      });
+    } else {
+      console.log(`Sender not found for userId: ${socket.userId}`);
+    }
+  });
 
-      
-    })
-    socket.on("private_message", ({ sender, receiver, message }) => {
-        const receiverSocketId = users[receiver]; 
-        console.log("this is the user",users);
-        if (receiverSocketId) {
-            io.to(receiverSocketId).emit("received-message", { sender, message });
-            console.log(`message is sent by ${sender} message is ${message} to ${receiver}`);
-        } else {
-            console.log(`User not found for email: ${receiver}`);
-        }
+ 
+  socket.on("disconnect", () => {
+    console.log(`User disconnected: ${socket.id}`);
+    if (socket.userId && users[socket.userId]?.socketId === socket.id) {
+      delete users[socket.userId];
+      console.log(`User ${socket.userId} removed from users list.`);
+    }
+  });
+});
 
-
-
-
-    });
-
-    socket.on("disconnect-socket",() => {
-        console.log("user disconnect",socket.id);
-        for (let email in users){
-            if (users[email] === socket.id){
-                delete users[email];
-                break;
-            }
-        }
-    })
-    socket.on("join-room",(room) => {
-        socket.join(room);
-        console.log(`user join ${room}`);
-    });
-    socket.emit("welcome","Welcome to the chat room!")
-
-    
-   
-
-})
-
-
-server.listen(port,() => {
-    console.log("server run successfully");
+server.listen(port, () => {
+  console.log(`Server running successfully on port ${port}`);
 });
