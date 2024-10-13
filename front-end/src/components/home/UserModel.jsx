@@ -17,24 +17,14 @@ const UserModel = () => {
             icon:<CgProfile/>,
             path:`/profile/${currentUser?.uid}`        
         },
-        {
-            title:"Libraries",
-            icon:<MdOutlineLocalLibrary/>,
-            path:"/libraries"
-
-        },
+     
         {
             title:"Stories",
             icon:<MdAutoStories/>,
             path:"/stories"
 
         },
-        {
-            title:"Stats",
-            icon:<MdOutlineQueryStats/>,
-            path:"/stats"
-
-        },
+    
         
 
     ]

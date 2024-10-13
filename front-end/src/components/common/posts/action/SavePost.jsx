@@ -27,7 +27,7 @@ const SavePost = ({ post }) => {
                     await setDoc(saveRef, { ...post });
                     alert("The Post is saved");
                 }
-                // Toggle the saved state after save/unsave action
+                
                 setIsSaved(!isSaved);
             }
             else{

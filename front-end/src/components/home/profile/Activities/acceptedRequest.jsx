@@ -37,7 +37,7 @@ const AcceptedRequest = () => {
         const chatId = currentUser?.uid < senderId
             ? `${currentUser?.uid}_${senderId}`
             : `${senderId}_${currentUser?.uid}`;
-            navigate(`/chatrooms?email=${currentUserData?.email}`);
+            navigate(`/chatrooms/${chatId}`);
     };
 
     return (

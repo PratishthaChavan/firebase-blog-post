@@ -58,7 +58,9 @@ const Comments = ({postId}) => {
       onClick={() => setShowComment(false)}
        className='text-xl'>
       <LiaTimesSolid />
+      
       </button>
+      
     </div>
     {currentUser && (
       <div className='shadows p-3 my-5 overflow-hidden'>

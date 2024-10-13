@@ -3,7 +3,7 @@ import React from 'react'
 const Model = ({ children, modal, setModal }) => {
   return (
     <>
-      {/* Modal Overlay */}
+      
       {modal && (
         <div 
           id="modal-container"
@@ -12,11 +12,11 @@ const Model = ({ children, modal, setModal }) => {
               setModal(false);
             }
           }}
-          className="bg-white/50 fixed inset-0 z-50"
+          className="bg-white/50 fixed inset-0 z-60"
         ></div>
       )}
 
-      {/* Modal Content */}
+   
       <div className={`${modal ? "z-50" : ""}`}>
         {children}
       </div>

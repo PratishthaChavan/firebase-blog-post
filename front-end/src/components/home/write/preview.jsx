@@ -99,7 +99,7 @@ const Preview = ({ setPublish, title, description }) => {
         fetchUsername();
     }, [currentUser]); 
     return (
-        <section className='absolute inset-0 bg-gray-400 z-30'>
+        <section className='absolute inset-0 bg-gray-300 z-30 overflow-auto'>
             <div className='size my-[2rem]'>
                 <span
                     onClick={() => setPublish(false)}
@@ -108,13 +108,13 @@ const Preview = ({ setPublish, title, description }) => {
                 </span>
                 <div className='mt-[8rem] flex flex-col md:flex-row gap-10'>
                     <div className='flex-[1]'>
-                        <h3>Story Preview</h3>
+                        <h3 className='font-bold'>Story Preview</h3>
                         <div
                             style={{ backgroundImage: `url(${imageUrl})` }}
                             onClick={handleClick}
                             className='w-full h-[300px] object-cover bg-gray-100 my-3 grid 
                             place-items-center cursor-pointer bg-cover'>
-                            Add Image
+                        {!imageUrl && "Add Image"}
                         </div>
                         <input
                             onChange={(e) => {

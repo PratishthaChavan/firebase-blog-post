@@ -11,9 +11,9 @@ import Profile from "./components/home/profile/profile";
 import SinglePost from "./components/common/posts/singlePost";
 import EditPost from "./components/common/posts/action/EditPost";
 import Filter from "./components/demo/filter";
-import Chatrooms from "./chatroom/Chatrooms";
+import Chatrooms from "./chatrooms/Chatrooms";
 import Chats from "./chatroom/chats";
-import Chatroom from "./chatroom/Chatrooms";
+import ChatRoom from "./ChatRoom";
 import { Login } from "./login/login";
 
 
@@ -35,8 +35,8 @@ function App() {
          <Route path="/post/:postId" element={<SinglePost/>}></Route>
          <Route path="/editpost/:postId" element={<EditPost/>}></Route>
          <Route path="/filter/:tag" element={<Filter/>}></Route>
-         <Route path="/chatrooms" element={<Chatrooms/>}></Route>
-         <Route path="/chatroom/:chatId" element={<Chatroom/>}></Route>
+         <Route path="/chatrooms/:chatId" element={<Chatrooms/>}></Route>
+         <Route path="/chatroom/:chatId" element={<ChatRoom/>}></Route>
          <Route path="/chat" element={<Chats/>}></Route>
          <Route path="/login" element={<Login />}></Route>
         </Routes>

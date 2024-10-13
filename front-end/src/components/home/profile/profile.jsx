@@ -62,7 +62,7 @@ const Profile = () => {
         </div>
         <div className=' flex items-center gap-5 mt-[1rem]  border-b border-gray-500 mb-[3rem]'>
         {activities.map((prof, i) => (
-  <div key={i} className={`py-[0.5rem] ${prof.title === currentActivity.title 
+  <div key={i} className={`py-[0.5rem] text-2xl font-title ${prof.title === currentActivity.title 
     ? "border-b border-blue-700" : ""}`
      }>
     <button onClick={() => setCurrentActivity(prof)}>{prof.title}</button>

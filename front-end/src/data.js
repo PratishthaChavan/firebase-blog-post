@@ -1,16 +1,7 @@
 export const Nav = [
-    {
-        title : "our story",
-        path:"/"
-    },
-    {
-        title: "MemberShip",
-        path:"/"
-    },
-    {
-        title: "Write",
-        path: "/"
-    }
+  
+ 
+  
 ];
 
 export const Discovers = [
@@ -35,7 +26,7 @@ export const discoverAction = [
     "Privacy",
     "Term",
     "About",
-    "flower"
+    
 
 ];
 

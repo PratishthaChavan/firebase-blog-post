@@ -177,10 +177,10 @@ const Comment = ({ items: comment, postId, commentId }) => {
                             </button>
                         )}
                     </p>
-                    <button className='text-blue-500' onClick={() => setShowReply(!showReply)}>
+                    <button className='text-blue-500 mr-3' onClick={() => setShowReply(!showReply)}>
                         {showReply ? "cancel " : "Reply"}
                     </button>
-                    <button className='text-blue-500 mt-2' onClick={() => setShowNestedReply(!showNestedReplies)}>
+                    <button className='text-blue-500 mr-6' onClick={() => setShowNestedReply(!showNestedReplies)}>
                            {showNestedReplies ? "Hide replies" : "Show replies"}
                         </button>
                     {showReply && (

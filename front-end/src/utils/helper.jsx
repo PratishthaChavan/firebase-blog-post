@@ -13,14 +13,14 @@ export const SecretEmail = (email) => {
 
 }
 export const readtime = (desc) => {
-    const averageReading = 225; // Average reading speed in words per minute
+    const averageReading = 225; 
 
     const div = document.createElement("div");
-    div.innerHTML = desc.__html; // Set HTML content to a div
+    div.innerHTML = desc.__html; 
 
-    const context = div.textContent || div.innerHTML; // Get the text content
-    const word = context.trim().split(/\s+/); // Split text into words
-    return Math.ceil(word.length / averageReading); // Calculate reading time in minutes
+    const context = div.textContent || div.innerHTML;
+    const word = context.trim().split(/\s+/); 
+    return Math.ceil(word.length / averageReading); 
 }
 export const formatnumber = (num) => {
     if (num >= 1e9){

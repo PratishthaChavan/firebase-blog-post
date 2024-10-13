@@ -42,7 +42,7 @@ const Inbox = () => {
             const chatId = currentUser?.uid < receiverId
                 ? `${currentUser?.uid}_${receiverId}`
                 : `${receiverId}_${currentUser?.uid}`;
-    
+            sessionStorage.setItem("chatId", chatId)
             const chatRef = doc(db, "chatrooms", chatId);
             const chatroomSnap = await getDoc(chatRef);
     
@@ -63,7 +63,7 @@ const Inbox = () => {
             }
            
     
-            navigate(`/chatrooms?email=${currentUserData?.email}`);
+            navigate(`/chatrooms/${chatId}`);
             console.log(currentUserData?.email);
         } catch (error) {
             console.log(error);
@@ -120,9 +120,7 @@ const Inbox = () => {
                             <div className='flex items-end justify-end gap-2'>
                                 {request.status === "pending" ? (
                                     <>
-                                      <button onClick={() => navigate("/chatroom")} >
-                                        chatroom
-                                      </button>
+                                    
                                         <button 
                                             className='bg-green-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
                                             onClick={() => updateRequestStatus(request.id, "accepted", request.senderId)}>

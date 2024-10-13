@@ -23,7 +23,11 @@ const DemoHeader = () => {
 
         <div className='size h-[70px] flex items-center justify-between'>
            <Link to="/">
-             <h1>BlogSite</h1>
+           <button class="button" data-text="Awesome">
+    <span className="actual-text">&nbsp;BAT&nbsp;</span>
+    <span aria-hidden="true" className="hover-text">&nbsp;BAT&nbsp;</span>
+</button>
+             
            </Link>
             <div className='flex items-center gap-5'>
                <div className='hidden text-sm sm:flex items-center gap-5'>
@@ -33,9 +37,11 @@ const DemoHeader = () => {
                     </Link>
                 ))}
                </div>
+
+
+
                <div className='relative'>
-                <button onClick={() => setAuthModel(true)} className='hidden text-sm sm:flex items-center gap-5' >sign up</button>
-               
+              
                </div>
                <Auth modal={authModel} setModal={setAuthModel}/>
                <button onClick={() => setAuthModel(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
