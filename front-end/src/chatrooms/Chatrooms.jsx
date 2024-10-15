@@ -4,18 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase/firebase';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
-
-
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-  query,
-  orderBy,
-  Timestamp,
-  deleteDoc
+import {addDoc,collection,doc,getDoc,onSnapshot,query,orderBy,deleteDoc
 } from 'firebase/firestore';
 import { useBlog } from '../context/context';
 
@@ -33,15 +22,12 @@ const Chatrooms = () => {
   const [error, setError] = useState(null);
   const [username, setUsername] = useState('');
   const messagesEndRef = useRef(null);
-
-
+   
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const today = new Date();
-  
-  
     if (date.toDateString() === today.toDateString()) {
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format: HH:MM AM/PM
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
     } else {
       return date.toLocaleDateString(); 
     }
@@ -65,7 +51,6 @@ const Chatrooms = () => {
     await deleteDoc(delref,{
       message: "This message has been deleted",
     });
-    
   }
 
   const fetchMessages = async () => {
@@ -133,12 +118,10 @@ const Chatrooms = () => {
       setMessages((prevMessages) => [...prevMessages, data]);
       await saveToFirestore(data);
     });
-
     return () => {
       socket.disconnect();
     };
   }, [chatId]);
-
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -148,13 +131,11 @@ const Chatrooms = () => {
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (userMessage.trim() === "") return;
-
     const messageData = { 
       senderId: currentUser.uid, 
       username: username, 
       message: userMessage 
     };
-
     socket.emit("message", { message: userMessage, chatId: chatId, ...messageData });
     setUserMessage('');
   };
@@ -180,21 +161,20 @@ const Chatrooms = () => {
     <div>
       
       <div className='w-full h-[100vh] flex items-center justify-center '>
-        
-        <div className='bg-black p-6 shadow-lg w-full h-screen flex flex-col items-center justify-between gap-2'>
+      <div className='bg-black p-6 shadow-lg w-full
+           h-screen flex flex-col items-center justify-between gap-2'>
           <nav className='bg-white flex w-full justify-between p-3 shadow-sm rounded-md'>
             <h1 className='font-bold tracking-wider capitalize'>ChatRoom:{username}</h1>
             <button
               onClick={handleLeaveChat}
-              className='font-bold bg-blue-700 text-yellow-300 rounded-lg px-2 hover:bg-black active:scale-95 transition-all duration-75'
+              className='font-bold bg-blue-700 text-yellow-300 rounded-lg
+               px-2 hover:bg-black active:scale-95 transition-all duration-75'
             >
               Leave
             </button>
           </nav>
-
-          <div className='w-full h-[70vh] flex flex-col items-start gap-3 overflow-auto '>
-        
-<div class="container">
+        <div className='w-full h-[70vh] flex flex-col items-start gap-3 overflow-auto '>
+  <div class="container">
     <div class="bubble">
         <span></span>
         <span></span>
@@ -209,16 +189,7 @@ const Chatrooms = () => {
         <span></span>
         <span></span>
     </div>
-    <div class="bubble">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    
-  
- </div>
+  </div>
             
             
             {messages.map((data, i) => (

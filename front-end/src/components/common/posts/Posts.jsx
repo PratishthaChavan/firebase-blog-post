@@ -5,11 +5,7 @@ import PostCards from './postCards';
 import { useBlog } from '../../../context/context';
 
 const Posts = () => {
-
   const {data,loading} = UseHooks("posts");
- 
-
-
   return (
    <section className='flex flex-col gap-[2.5rem]'>
      {loading ? <Loading/> : data.map((post,i) => <PostCards post={post} key={i}/>)}

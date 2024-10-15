@@ -44,8 +44,6 @@ const Comment = ({ items: comment, postId, commentId }) => {
 
     const handleEdit = async () => {
         try {
-
-          
             const ref = doc(db, "posts", postId, "comments", commentId); 
             await updateDoc(ref, {
                 Usercomments: editComment,
@@ -63,9 +61,6 @@ const Comment = ({ items: comment, postId, commentId }) => {
     }
    
     const currentUserData = allUser.find(user => user.id === currentUser?.uid);
-    
-
-   
     const sendRequest =async() => {
        try {
         if(currentUser){
@@ -90,9 +85,6 @@ const Comment = ({ items: comment, postId, commentId }) => {
        }
     }
 
-
-
-  
     const removeComments = async () => {
         try {
             const ref = doc(db, "posts", postId, "comments", commentId);
@@ -103,9 +95,6 @@ const Comment = ({ items: comment, postId, commentId }) => {
             console.log("Internal server error");
         }
     }
-
-  
- 
 
     const nestComments = async () => {
         try {

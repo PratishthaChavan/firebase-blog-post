@@ -66,7 +66,8 @@ const EditProfile = ({editModal,setEditModel,getUserData}) => {
   return (
     <>
     <Model modal = {editModal} setModal={setEditModel}>
-        <div className='center w-[95%] md:w-[45rem] bg-white mx-auto showdows my-[1rem] z-20 mb-[3rem] p-[2rem]'>
+        <div className='center w-[95%] md:w-[45rem] bg-gray-100 mx-auto showdows my-[1rem] z-20 mb-[3rem] p-[2rem]
+        '>
            {/*head*/ }
            <div className=' flex items-center justify-between'>
                 <h2 className='font-bold text-xl'>Profile Information</h2>

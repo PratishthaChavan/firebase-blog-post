@@ -14,26 +14,7 @@ const Banner = () => {
              <button className='btn bg-black rounded-full text-green-400 !px-6 !mt-[2.5rem] !text-[1.2rem]'>Start Reading</button>
 
         </div>
-        <div className='flex flex-col items-center '>
-        
-<button class="button">
-  <span class="liquid"></span>  
-  <span class="btn-txt">BAT</span>
-</button>
-        <div className='light-button absolute md:relative md:flex md:items-center md:justify-center items-end'>
-        
-        <button className="bt">
-          <div className="light-holder">
-            <div className="dot"></div>
-            <div className="light"></div>
-          </div>
-          <div className="button-holder flex flex-col items-center justify-center">
-           
-            <p>Brick And Talk</p>
-          </div>
-        </button>
-      </div>
-      </div>
+  
         
     </div>
   )

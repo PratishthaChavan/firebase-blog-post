@@ -66,7 +66,7 @@ const Nestedcomment = ({ reply ,commentId,postId,replyId}) => {
          className='text-red-500 '
          onClick={removeNesteComment}>Remove</button>
          <button className=' text-green-400' onClick={() => setIsEdit(true)}>Edit</button>
-         <button onClick={() => navigate("/chatroom")}>chatroom</button>
+       
          </div>
        )}
                     

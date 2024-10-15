@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useBlog } from '../../../../context/context';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../../firebase/firebase';
-
 import { useNavigate } from 'react-router-dom';
 
 const AcceptedRequest = () => {
@@ -12,10 +11,8 @@ const AcceptedRequest = () => {
     const currentUserData = allUser.find(user => user.id === currentUser?.uid);
     const fetchReceiverData = async () => {
         if (!currentUser) return; 
-
         try {
-           
-            const notificationsRef = collection(db, "users", currentUser.uid, "notifications");
+           const notificationsRef = collection(db, "users", currentUser.uid, "notifications");
             const notificationsData = await getDocs(notificationsRef);
             
            
@@ -29,7 +26,6 @@ const AcceptedRequest = () => {
             console.log("Error fetching notifications:", error);
         }
     };
-
     useEffect(() => {
         fetchReceiverData(); 
     }, [currentUser]); 
@@ -39,7 +35,6 @@ const AcceptedRequest = () => {
             : `${senderId}_${currentUser?.uid}`;
             navigate(`/chatrooms/${chatId}`);
     };
-
     return (
         <div className='flex gap-2 flex-col '>
             <h2>Accepted Requests</h2>

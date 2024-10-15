@@ -47,8 +47,8 @@ const Profile = () => {
     const {data:follow} = UseSingleFetch("users",userId,"follow");
     const {data:follower} = UseSingleFetch("users", userId,"follower");
 
-  
   return (
+    <div className='w-full h-screen bg-gray-100 overflow-auto'>
    <section className='size flex gap-[4rem] relative'>
     <div className='mt-[9rem] flex-[2]'>
         <div className='flex items-end gap-4'>
@@ -100,14 +100,14 @@ const Profile = () => {
                                 <button key={i} className='text-sm text-black'>{item}</button>
                             ))}
         </div>
-
-     </div>
+</div>
      </div>
 
 </Model>
 {editModal && <EditProfile getUserData={getUserData} editModal={editModal} setEditModel={setEditModel}/>}
     
    </section>
+   </div>
   )
 }
 

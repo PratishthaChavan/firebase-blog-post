@@ -14,7 +14,7 @@ const Demo = () => {
     <Posts></Posts>
 
   </div>
-  <div className='flex-[1] relative'>
+  <div className='flex-[1] relative z-0  '>
     <Discover></Discover>
   </div>
 </div>

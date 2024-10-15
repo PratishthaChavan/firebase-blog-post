@@ -3,7 +3,9 @@ import Follow from './userTofollow/follow';
 import Posts from '../common/posts/Posts';
 const Home = () => {
   return (
-   <section className='size flex gap-[5rem] relative'>
+
+   <div className='w-full h-screen bg-gray-100 overflow-auto'>
+   <section className='size flex gap-[5rem] relative '>
   <div className='flex-[2] py-10 mb-[4rem]'>
    <Posts/>
   </div>
@@ -12,6 +14,7 @@ const Home = () => {
     <Follow></Follow>
   </div>
    </section>
+   </div> 
   )
 }
 

@@ -8,6 +8,8 @@ import { db, storage } from '../../../firebase/firebase';
 import { useBlog } from '../../../context/context';
 import { useNavigate } from 'react-router-dom';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
 
 const Preview = ({ setPublish, title, description }) => {
     const [desc, setDesc] = useState('');
@@ -126,11 +128,21 @@ const Preview = ({ setPublish, title, description }) => {
                             value={preview.title}
                             onChange={(e) => setPreview(prev => ({ ...prev, title: e.target.value }))}
                             className='outline-none w-full border-b border-green-400 py-2' />
-                        <ReactQuill
-                            className='py-3 border-b border-gray-300'
-                            placeholder='Preview story...'
-                            theme="snow" value={desc}
-                            onChange={setDesc} />
+                            <SunEditor
+                            setContents={desc}
+                            onChange={setDesc}
+                            setOptions={{
+                                height: 300,
+                                buttonList: [
+                                    ['font', 'fontSize', 'formatBlock'],
+                                    ['bold', 'underline', 'italic', 'strike'],
+                                    ['list', 'lineHeight', 'paragraphStyle'],
+                                    ['link', 'image', 'video'],
+                                    ['align', 'horizontalRule'],
+                                    ['undo', 'redo'],
+                                ],
+                            }}
+                        />
                         <p className='text-green-500 font-sans'><span className='font-bold'>Note:</span> Changes here will affect how your story appears in Public</p>
                     </div>
                     <div className='flex-[1] flex flex-col mb-5 gap-4 md:mb-0'>

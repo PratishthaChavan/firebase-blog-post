@@ -7,13 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { getDoc } from 'firebase/firestore';
 
 const Inbox = () => {
-    const { data, loading } = UseHooks("users"); 
     const { currentUser, allUser } = useBlog();
     const navigate = useNavigate();
-    
     const currentUserData = allUser.find(user => user.id === currentUser?.uid);
     const [requests, setRequests] = useState([]);
-
     const fetchRequest = async() => {
         try {
             if (currentUser) {
@@ -29,14 +26,9 @@ const Inbox = () => {
             console.log(error);
         }
     }
-
     useEffect(() => {
         fetchRequest();
     }, [currentUser]);
-
-
-
-    
     const handleOpenChatroom = async(receiverId) => {
         try {
             const chatId = currentUser?.uid < receiverId
@@ -61,9 +53,7 @@ const Inbox = () => {
                 });
                 
             }
-           
-    
-            navigate(`/chatrooms/${chatId}`);
+           navigate(`/chatrooms/${chatId}`);
             console.log(currentUserData?.email);
         } catch (error) {
             console.log(error);
@@ -93,7 +83,6 @@ const Inbox = () => {
             console.log(error);
         }
     }
-
     const deleteRequest = async(requestId) => {
         try {
             const requestRef = doc(db, "users", currentUser?.uid, "request", requestId);
@@ -104,58 +93,64 @@ const Inbox = () => {
             console.log(error);
         }
     }
-
     return (
         <>
-            <div className='rounded-tl-none rounded-md rounded-br-none px-2 py-1'>
-                <h2>Friend Requests</h2>
-                {requests.length > 0 ? (
-                    requests.map(request => (
-                        <div key={request.id}>
-                            <div className='flex gap-2 justify-start items-start'>
-                                <img className='w-[1.5rem] h-[1.5rem] object-cover rounded-full' src={request.ProfileImage || "/profile.jpg"} alt="" />
-                                <p className='text-green-400'> {request.Sendername}</p>
-                            </div>
-                            <p className='text-gray-500'> {new Date(request.created).toLocaleString()}</p>
-                            <div className='flex items-end justify-end gap-2'>
-                                {request.status === "pending" ? (
-                                    <>
-                                    
-                                        <button 
-                                            className='bg-green-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
-                                            onClick={() => updateRequestStatus(request.id, "accepted", request.senderId)}>
-                                            Accept
-                                        </button>
-                                        <button 
-                                            className='bg-red-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
-                                            onClick={() => updateRequestStatus(request.id, "declined", request.senderId)}>
-                                            Decline
-                                        </button>
-                                    </>
-                                ) : request.status === "accepted" ? (
-                                    <button  
-                                        onClick={() => handleOpenChatroom(request.senderId)}
-                                        className='bg-blue-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'>
-                                        Chatroom
-                                    </button>
-                                    
+         <div className='rounded-tl-none rounded-md rounded-br-none px-2 py-1'>
+            <h2>Friend Requests</h2>
+              {requests.length > 0 ? (
+              requests.map(request => (
+                <div key={request.id}>
+                    <div className='flex gap-2 justify-start items-start'>
+                        <img className='w-[1.5rem] h-[1.5rem] object-cover rounded-full' 
+                            src={request.ProfileImage || "/profile.jpg"} alt="" />
+                            <p className='text-green-400'> {request.Sendername}</p>
+                    </div>
+                        <p className='text-gray-500'>
+                        {new Date(request.created).toLocaleString()}</p>
+                        <div className='flex items-end justify-end gap-2'>
+                        {request.status === "pending" ? (
+                    <>
+                      <button 
+                       className='bg-green-500 rounded-full px-2 py-1 
+                        active:scale-75 transition-all duration-50'
+                        onClick={
+                         () => updateRequestStatus(request.id, "accepted", request.senderId)
+                        }>
+                        Accept
+                      </button>
+                      <button 
+                        className='bg-red-500 rounded-full px-2 py-1 
+                         active:scale-75 transition-all duration-50'
+                          onClick={
+                          () => updateRequestStatus(request.id, "declined", request.senderId)
+                        }>
+                        Decline
+                        </button>
+                    </>
+                        ) : request.status === "accepted" ? (
+                            <button  
+                                onClick={() => handleOpenChatroom(request.senderId)}
+                                  className='bg-blue-500 rounded-full px-2 py-1 
+                                   active:scale-75 transition-all duration-50'>
+                                    Chatroom
+                            </button>
                                 ) : ( 
                                     <p className='text-red-500'>Request Declined</p>
                                 )}
-                              
-                                <button 
-                                    className='bg-gray-500 rounded-full px-2 py-1 active:scale-75 transition-all duration-50'
-                                    onClick={() => deleteRequest(request.id)}>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>No requests found.</p>
-                )}
+                        <button 
+                           className='bg-gray-500 rounded-full px-2 py-1 
+                                active:scale-75 transition-all duration-50'
+                            onClick={() => deleteRequest(request.id)}>
+                                Delete
+                        </button>
+                </div>
             </div>
-        </>
+            ))
+        ) : (
+        <p>No requests found.</p>
+        )}
+</div>
+    </>
     )
 }
 

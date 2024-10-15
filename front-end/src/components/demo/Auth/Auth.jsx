@@ -64,7 +64,7 @@ const Auth = ({ modal, setModal }) => {
                 Already have an account? 
                 <button 
                   className='text-blue-500 font-semibold hover:text-blue-600'
-                  onClick={() => setShowSignInForm(true)}  // Show SignInUser on button click
+                  onClick={() => setShowSignInForm(true)}  
                 >
                   Sign In
                 </button>

@@ -17,11 +17,7 @@ import ChatRoom from "./ChatRoom";
 import { Login } from "./login/login";
 
 
-
 function App() {
-    
-
-
   const { currentUser } = useBlog();
   return (
     <>

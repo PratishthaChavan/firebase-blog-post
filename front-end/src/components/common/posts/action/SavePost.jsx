@@ -47,5 +47,4 @@ const SavePost = ({ post }) => {
         </button>
     );
 }
-
 export default SavePost;

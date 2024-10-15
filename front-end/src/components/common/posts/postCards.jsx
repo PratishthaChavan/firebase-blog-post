@@ -7,20 +7,15 @@ import { useBlog } from '../../../context/context';
 import Action from './action/Action';
 import { useNavigate } from 'react-router-dom';
 
-
 const PostCards = ({ post }) => {
   const {title, userId ,desc,postImg,id:postId,created} = post; 
   const { data, loading } = useHooks("users"); 
   const {currentUser,allUser} = useBlog();
   const navigate = useNavigate();
-
-
-
   const getUserData = allUser.find((user) => user?.id === userId);
 
   return (
- 
- <>
+  <>
       <div
       onClick={() => {
         navigate(`/post/${postId}`)
@@ -29,10 +24,9 @@ const PostCards = ({ post }) => {
       <div className='flex-[2.5]'>
         <p className='pb-2 font-semibold capitalize'>{getUserData?.username}</p>
         <h2 className='text-xl font-bold line-clamp-1 leading-6 capitalize'>{title}</h2>
-        <div className='py-1 leading-5 text-gray-500 line-clamp-2 ' dangerouslySetInnerHTML={{__html:desc}} />
-
+        <div className='py-1 leading-5 text-gray-500 line-clamp-2 ' dangerouslySetInnerHTML={{ __html:desc}} />
       </div>
-      {postImg && (<div className='flex-[1] w-[400px] h-[150px] overflow-hidden'>
+          {postImg && (<div className='flex-[1] w-[400px] h-[150px] overflow-hidden'>
           <img src={postImg} alt="" className='w-[53rem] h-[10rem] object-cover' />
         </div> )}
       </div>
@@ -44,8 +38,7 @@ const PostCards = ({ post }) => {
        </div>
       </div>
  </>
-    
-  );
+ );
 }
 
 export default PostCards;

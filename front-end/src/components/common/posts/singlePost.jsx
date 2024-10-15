@@ -21,8 +21,6 @@ import Sharepost from "./action/sharepost";
 import Recommended from "./recommended";
 import { useRef } from "react";
 
-
-
 const SinglePost = () => {
   const [post, setPost] = useState({});
   const { postId } = useParams();
@@ -65,18 +63,12 @@ const SinglePost = () => {
         } catch (error) {
           console.log("pageView is not incremented");
         }
-
       }
       incrementPageView();
     }
     isInitialRender.current = false;
   },[])
-
-
-  
-
-  const { title, desc, postImg, username, created, image, userId } = post;
-
+const { title, desc, postImg, username, created, image, userId } = post;
   return (
     <>
       {loading ? (
@@ -96,14 +88,14 @@ const SinglePost = () => {
             <div className="capitalize">
               <span>{username}.</span>
               {currentUser?.uid !== userId && <Followbtn userId={userId} />}
-
               <p className="text-gray-500 text-sm ">
                 {readtime({ __html: desc })} min read.
                 <span className="ml-1">{moment(created).fromNow()}</span>
               </p>
             </div>
           </div>
-          <div className="flex items-center border-b border-t justify-between border-gray-200 py-[0.5rem]">
+          <div className="flex items-center border-b border-t justify-between
+           border-gray-200 py-[0.5rem]">
             <div className="gap-5 flex items-center">
               <Like postId={postId}></Like>
               <OpenComment></OpenComment>
@@ -125,10 +117,12 @@ const SinglePost = () => {
               />
             ) 
             }
+        <div className="mt-6 clearfix">
             <div
-              className=" mt-6 "
+              className="overflow-auto"
               dangerouslySetInnerHTML={{ __html: desc }}
-            ></div>
+           ></div>
+        </div>
           </div>
         </section>
       )}

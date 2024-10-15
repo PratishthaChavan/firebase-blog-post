@@ -8,12 +8,9 @@ const ProfileList = ({ getUserData }) => {
   const { currentUser } = useBlog();
   const { data, loading } = UseSingleFetch("users", currentUser?.uid, "savePost");
 
-  // Loading state
   if (loading) {
     return <Loading />;
   }
-
-  // If the user has no saved posts
   const hasNoSavedPosts = data.length === 0;
 
   return (
@@ -22,6 +19,7 @@ const ProfileList = ({ getUserData }) => {
         <div className='flex flex-col gap-[2rem] mb-1'>
           {hasNoSavedPosts ? (
             <p className='text-gray-400'>
+               <img className='flex rounded-full object-cover w-3 h-3' src={getUserData?.image} alt="" />
               <span className='capitalize mr-1'>{getUserData?.username}</span> has no saved post
             </p>
           ) : (
@@ -29,7 +27,7 @@ const ProfileList = ({ getUserData }) => {
           )}
         </div>
       ) : (
-        <p>You do not have permission to view these posts.</p>
+        <p className='text-2xl'>You do not have permission to view these posts.</p>
       )}
     </div>
   );

@@ -45,8 +45,9 @@ const SignInUser = ({ setModal }) => {
 
   return (
     <div className='size mt-[rem] text-center'>
-      <h2 className='text-3xl font-bold mt-3 '>Sign in with Email</h2>
-      <p className='w-full sm:w-[25rem] mx-auto py-[3rem] '>Enter your Email and Password Correctly</p>
+      <h2 className='text-3xl font-title mt-3 text-blue-300'>Sign in with Email</h2>
+      <p className='w-full sm:w-[25rem] mx-auto py-[3rem] font-extrabold text-gray-200 hover:text-green-400 
+      tracking-wider capitalize'>Enter your Email and Password Correctly</p>
       
       <form className='flex flex-col gap-4' onSubmit={handleSignIn}>
         <Input
@@ -65,7 +66,7 @@ const SignInUser = ({ setModal }) => {
         />
         <button 
           type="submit"
-          className='flex px-4 py-1 rounded-full border w-fit mx-auto text-sm bg-green-400 border-green-500'>
+          className='flex px-4 py-1 rounded-full border w-fit mx-auto text-sm bg-blue-400 hover:bg-green-400'>
           Sign In
         </button>
       </form>

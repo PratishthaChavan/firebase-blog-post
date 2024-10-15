@@ -66,18 +66,24 @@ const Post = ({post}) => {
     navigate(`/post/${postId}`);
   }}
   className='w-full cursor-pointer'>
-    <img className='w-full h-[200px] object-cover' src={postImg} alt="post-img" />
+    <img className='w-full h-[200px] object-cover' src={postImg } alt="post-img" />
     <div className='flex items-center gap-1 py-3'>
     {userImg ? (
-          <img className='w-[2rem] h-[2rem] object-cover rounded-full' src={userImg} alt={username} />
+          <img 
+            className='w-[2rem] h-[2rem] object-cover rounded-full' 
+            src={userImg} 
+            alt={username} />
         ) : (
-          <div className='w-[2rem] h-[2rem] bg-gray-300 rounded-full'></div>
+          <div className='w-[2rem] h-[2rem] bg-gray-300 rounded-full'> 
+          <img src="/profile.jpg" alt="" />
+          </div>
         )}
         <h3 className='text-sm capitalize'>{username || 'Unknown User'}</h3>
      
     </div>
     <h2 className='font-extrabold leading-5 line-clamp-2 '>{title}</h2>
-    <div className='line-clamp-2 my-3 text-gray-500 leading-5' dangerouslySetInnerHTML={{__html:desc}}></div>
+    <div className='line-clamp-2 my-3 text-gray-500 leading-5' 
+         dangerouslySetInnerHTML={{__html:desc}}></div>
     <p className='text-sm text-gray-600 '>{readtime({__html:desc})} min read
       <span className='ml-3'>{moment(created).format("MMM DD")}</span>
     </p>

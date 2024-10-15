@@ -55,21 +55,22 @@ const Signin = ({setModel}) => {
   return (
     <div className='size mt-[2rem] text-center'>
         <h1 className='text-3xl text-blue-600 font-bold' >Login</h1>
-        <p className='w-full sm:w-[25rem] mx-auto py-[1rem]'>
+        <p className='w-full sm:w-[25rem] text-1xl mx-auto font-extrabold text-gray-200 hover:text-green-400 
+      tracking-wider capitalize   py-[1rem]'>
             Enter your Details
         </p>
         {errorMessage && (
         <div className="text-red-500 mb-4">{errorMessage}</div>
       )}
-        <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
+        <form className='flex flex-col gap-3 font-bold' onSubmit={handleSubmit}>
         <Input
+        
           type="text"
           title="Username"
           form={form}
           setForm={setForm}
           name="username"
           
-        
         />
             
         <Input
@@ -86,16 +87,12 @@ const Signin = ({setModel}) => {
           form={form}
           setForm={setForm}
           name="password"
-
-          
         />
             <button 
             className='px-4 py-1 rounded-full text-sm bg-blue-700 hover:bg-blue-600 w-fit mx-auto'>Sign In</button>
 
         </form>
-     
-
-    </div>
+     </div>
   )
 }
 

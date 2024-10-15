@@ -5,9 +5,8 @@ import { Nav } from '../../data';
 import Auth from './Auth/Auth';
 const DemoHeader = () => {
     const [isActive,setIsActive] = useState(false);
-  
     const {authModel,setAuthModel} = useBlog();
-   useEffect(() => {
+    useEffect(() => {
     const scrollme = () => {
         window.scrollY > 50 ? setIsActive(true) : setIsActive(false);
     }
@@ -21,12 +20,12 @@ const DemoHeader = () => {
     } transition-colors duration-300`}
   >
 
-        <div className='size h-[70px] flex items-center justify-between'>
+        <div className='size h-[70px] flex items-center justify-between '>
            <Link to="/">
            <button class="button" data-text="Awesome">
-    <span className="actual-text">&nbsp;BAT&nbsp;</span>
-    <span aria-hidden="true" className="hover-text">&nbsp;BAT&nbsp;</span>
-</button>
+              <span className="actual-text">&nbsp;BAT&nbsp;</span>
+              <span aria-hidden="true" className="hover-text">&nbsp;BAT&nbsp;</span>
+           </button>
              
            </Link>
             <div className='flex items-center gap-5'>
@@ -37,15 +36,12 @@ const DemoHeader = () => {
                     </Link>
                 ))}
                </div>
-
-
-
-               <div className='relative'>
+            <div className='relative'>
               
-               </div>
+            </div>
                <Auth modal={authModel} setModal={setAuthModel}/>
                <button onClick={() => setAuthModel(true)} className={`bg-black text-white px-3 py-2 font-medium rounded-full
-               active:scale-95 transition-all duration-75
+               active:scale-95 transitioen-all duration-75
                 ${isActive ? 'bg-blue-600' : 'bg-black' }`}>Get started</button>
             </div>
     

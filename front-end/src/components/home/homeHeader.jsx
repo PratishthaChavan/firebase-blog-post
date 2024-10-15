@@ -51,7 +51,7 @@ alert("The post has been updated");
   };
 
   return (
-    <header className='border-b border-gray-200'>
+    <header className='border-b border-gray-200 bg-yellow-400'>
       {userLoading && <Loading/>}
       <div className='size h-[60px] flex items-center justify-between'>
         <div className='flex items-center gap-3'>
